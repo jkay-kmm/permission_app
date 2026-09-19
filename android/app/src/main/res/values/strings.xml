@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notification_channel_name">App blocking</string>
+    <string name="notification_channel_description">Keeps app blocking active</string>
+    <string name="notification_service_title">Brainrot is active</string>
+    <string name="notification_service_content">App blocking is running</string>
+    <string name="block_message_title">App blocked</string>
+    <string name="block_message_default">This app is blocked by your current rule.</string>
+    <string name="block_button_ok">Go home</string>
+    <string name="block_button_emergency">Emergency access</string>
+    <string name="widget_mood_description">Current mood</string>
+</resources>
