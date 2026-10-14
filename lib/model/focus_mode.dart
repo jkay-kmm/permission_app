@@ -220,6 +220,7 @@ class FocusMode {
       'isActive': isActive,
       'startTime': startTime?.toIso8601String(),
       'endTime': endTime?.toIso8601String(),
+      'endTimeEpochMillis': endTime?.millisecondsSinceEpoch,
       'duration': duration?.inMilliseconds,
       'allowNotifications': allowNotifications,
       'allowCalls': allowCalls,

@@ -9,4 +9,6 @@
     <string name="block_button_ok">Go home</string>
     <string name="block_button_emergency">Emergency access</string>
     <string name="widget_mood_description">Current mood</string>
+    <string name="accessibility_service_name">Brainrot app blocker</string>
+    <string name="accessibility_service_description">Detects when a blocked app is opened and displays the blocking screen.</string>
 </resources>

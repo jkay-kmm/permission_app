@@ -14,7 +14,8 @@ class BlockingScreen extends StatefulWidget {
   State<BlockingScreen> createState() => _BlockingScreenState();
 }
 
-class _BlockingScreenState extends State<BlockingScreen> {
+class _BlockingScreenState extends State<BlockingScreen>
+    with WidgetsBindingObserver {
   final PermissionService _permissionService = PermissionService();
 
   bool _isLoading = true;
@@ -23,19 +24,101 @@ class _BlockingScreenState extends State<BlockingScreen> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _checkPermissions();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() => _isLoading = false);
     });
   }
 
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) _checkPermissions();
+  }
+
   Future<void> _checkPermissions() async {
     try {
       final status = await _permissionService.checkAllPermissions();
-      setState(() => _permissionStatus = status);
+      if (mounted) setState(() => _permissionStatus = status);
     } catch (e) {
       debugPrint('Error checking permissions: $e');
     }
+  }
+
+  Future<void> _enableBlocking() async {
+    await _permissionService.requestAccessibilityPermission();
+  }
+
+  Future<void> _showAppPicker(BlockingViewModel blockingVM) async {
+    final apps = await _permissionService.getLaunchableApps();
+    if (!mounted) return;
+
+    if (apps.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Không tìm thấy ứng dụng để chặn.')),
+      );
+      return;
+    }
+
+    await showDialog<void>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('Chọn ứng dụng cần chặn'),
+        content: SizedBox(
+          width: double.maxFinite,
+          height: 420,
+          child: ListView.separated(
+            itemCount: apps.length,
+            separatorBuilder: (_, __) => const Divider(height: 1),
+            itemBuilder: (_, index) {
+              final app = apps[index];
+              return ListTile(
+                leading: const Icon(Icons.apps),
+                title: Text(app['appName']!),
+                subtitle: Text(app['packageName']!),
+                onTap: () async {
+                  Navigator.of(dialogContext).pop();
+                  await _blockApp(blockingVM, app);
+                },
+              );
+            },
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(),
+            child: const Text('Hủy'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _blockApp(
+    BlockingViewModel blockingVM,
+    Map<String, String> app,
+  ) async {
+    final packageName = app['packageName']!;
+    final rule = BlockingRule(
+      id: 'app_${packageName}_${DateTime.now().millisecondsSinceEpoch}',
+      name: 'Chặn ${app['appName']}',
+      description: 'Chặn cả ngày',
+      type: BlockingType.allDayBlock,
+      targetPackages: [packageName],
+      createdAt: DateTime.now(),
+      status: RuleStatus.active,
+    );
+    await blockingVM.addRule(rule);
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Đã chặn ${app['appName']}')),
+    );
   }
 
   @override
@@ -54,7 +137,40 @@ class _BlockingScreenState extends State<BlockingScreen> {
             backgroundColor: const Color(0xFFFFE4B5),
             elevation: 0,
           ),
-          body: buildRulesTab(blockingVM, t),
+          body: Column(
+            children: [
+              if (!(_permissionStatus?.hasAccessibilityPermission ?? false))
+                Container(
+                  width: double.infinity,
+                  margin: const EdgeInsets.fromLTRB(20, 8, 20, 0),
+                  padding: const EdgeInsets.all(14),
+                  decoration: BoxDecoration(
+                    color: Colors.amber.shade100,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Row(
+                    children: [
+                      const Expanded(
+                        child: Text(
+                          'Cần bật dịch vụ Trợ năng để phát hiện và chặn ứng dụng.',
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      FilledButton(
+                        onPressed: _enableBlocking,
+                        child: const Text('Bật'),
+                      ),
+                    ],
+                  ),
+                ),
+              Expanded(child: buildRulesTab(blockingVM, t)),
+            ],
+          ),
+          floatingActionButton: FloatingActionButton.extended(
+            onPressed: () => _showAppPicker(blockingVM),
+            icon: const Icon(Icons.add),
+            label: const Text('Chặn ứng dụng'),
+          ),
         );
       },
     );
@@ -181,11 +297,6 @@ Widget buildRulesTab(BlockingViewModel blockingVM, S t) {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Test blocking functionality card
-        _buildTestCard(blockingVM, t),
-        
-        const SizedBox(height: 20),
-        
         if (rules.where((r) => r.isActive).isEmpty) buildWarningCard(t),
 
         const SizedBox(height: 20),
@@ -305,7 +416,7 @@ void _testZaloBlock(BlockingViewModel blockingVM) async {
     createdAt: DateTime.now(),
     status: RuleStatus.active,
   );
-  
+
   try {
     await blockingVM.addRule(testRule);
     debugPrint('✅ Test rule added for Zalo blocking');

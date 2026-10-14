@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
@@ -366,15 +365,15 @@ void _showHealthCalculationDetails(
                   Container(
                     width: 60,
                     height: 60,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      boxShadow: [
-                        BoxShadow(
-                          color: _getScoreColor(finalScore),
-                          blurRadius: 10,
-                        ),
-                      ],
-                    ),
+                    // decoration: BoxDecoration(
+                    //   borderRadius: BorderRadius.circular(30),
+                    //   boxShadow: [
+                    //     BoxShadow(
+                    //       color: _getScoreColor(finalScore),
+                    //       blurRadius: 10,
+                    //     ),
+                    //   ],
+                    // ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(30),
                       child: Image.asset(
@@ -418,7 +417,7 @@ void _showHealthCalculationDetails(
                       children: [
                         Center(
                           child: Text(
-                            'Brain Health Calculation',
+                            'Cách tính điểm năng lượng não bộ',
                             style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
                           ),
                         ),
@@ -429,13 +428,12 @@ void _showHealthCalculationDetails(
               ),
               const SizedBox(height: 8),
               Text(
-                'Your brain health score starts at 100 every day at midnight and decreases based on your device usage time.',
+                'Điểm sức khỏe não bộ của bạn bắt đầu ở mức 100 mỗi ngày vào lúc nửa đêm và giảm dần dựa trên thời gian sử dụng thiết bị của bạn.',
                 style: Theme.of(
                   context,
                 ).textTheme.bodyMedium?.copyWith(color: Colors.grey[600]),
               ),
-              const SizedBox(height: 24),
-
+              const SizedBox(height: 16),
               Expanded(
                 child: SingleChildScrollView(
                   child: Column(
@@ -674,7 +672,7 @@ Widget _buildTopAppsSection(BuildContext context, HomeViewModel homeViewModel) {
   if (homeViewModel.topApps.isEmpty) return const SizedBox.shrink();
 
   return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+    padding: const EdgeInsets.symmetric(horizontal: 16),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -685,7 +683,6 @@ Widget _buildTopAppsSection(BuildContext context, HomeViewModel homeViewModel) {
                 fontSize: 14,
               ),
         ),
-        const SizedBox(height: 10),
         ListView.separated(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),

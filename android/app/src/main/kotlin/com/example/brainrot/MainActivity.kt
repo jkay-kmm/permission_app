@@ -31,9 +31,6 @@ class MainActivity : FlutterActivity() {
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
 
-        // Start the app blocking service
-        AppBlockingService.startService(this)
-
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler { call, result ->
             when (call.method) {
                 "hasUsagePermission" -> {
@@ -72,13 +69,24 @@ class MainActivity : FlutterActivity() {
                 "getMultipleAppIcons" -> {
                     getMultipleAppIcons(call, result)
                 }
-                "startBlockingService" -> {
-                    AppBlockingService.startService(this)
+                "getLaunchableApps" -> {
+                    result.success(getLaunchableApps())
+                }
+                "syncBlockingData" -> {
+                    val rulesJson = call.argument<String>("rulesJson") ?: "[]"
+                    val focusModesJson = call.argument<String>("focusModesJson") ?: "[]"
+                    getSharedPreferences("brainrot_blocking", Context.MODE_PRIVATE)
+                        .edit()
+                        .putString("blocking_rules", rulesJson)
+                        .putString("focus_modes", focusModesJson)
+                        .apply()
                     result.success(true)
                 }
+                "startBlockingService" -> {
+                    result.success(isAccessibilityServiceEnabled())
+                }
                 "stopBlockingService" -> {
-                    AppBlockingService.stopService(this)
-                    result.success(true)
+                    result.success(false)
                 }
                 "requestOverlayPermission" -> {
                     requestOverlayPermission()
@@ -115,6 +123,24 @@ class MainActivity : FlutterActivity() {
         val intent = Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS)
         intent.data = android.net.Uri.parse("package:$packageName")
         startActivity(intent)
+    }
+
+    private fun getLaunchableApps(): List<Map<String, String>> {
+        val launcherIntent = Intent(Intent.ACTION_MAIN).apply {
+            addCategory(Intent.CATEGORY_LAUNCHER)
+        }
+        return packageManager.queryIntentActivities(launcherIntent, 0)
+            .asSequence()
+            .filter { it.activityInfo.packageName != packageName }
+            .map {
+                mapOf(
+                    "packageName" to it.activityInfo.packageName,
+                    "appName" to it.loadLabel(packageManager).toString()
+                )
+            }
+            .distinctBy { it["packageName"] }
+            .sortedBy { it["appName"]?.lowercase(Locale.getDefault()) }
+            .toList()
     }
 
     private fun getTodayUsageStats(): List<Map<String, Any>> {

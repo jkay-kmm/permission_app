@@ -73,6 +73,23 @@ class PermissionService {
     }
   }
 
+  Future<List<Map<String, String>>> getLaunchableApps() async {
+    if (defaultTargetPlatform != TargetPlatform.android) return [];
+    try {
+      final apps = await _channel.invokeListMethod<dynamic>('getLaunchableApps');
+      return (apps ?? []).map((app) {
+        final values = Map<dynamic, dynamic>.from(app as Map);
+        return {
+          'packageName': values['packageName']?.toString() ?? '',
+          'appName': values['appName']?.toString() ?? '',
+        };
+      }).where((app) => app['packageName']!.isNotEmpty).toList();
+    } catch (e) {
+      debugPrint('Error loading installed apps: $e');
+      return [];
+    }
+  }
+
   Future<PermissionStatus> checkAllPermissions() async {
     final hasOverlay = await hasOverlayPermission();
     final hasAccessibility = await hasAccessibilityPermission();
@@ -123,7 +140,7 @@ class PermissionStatus {
     required this.hasAccessibilityPermission,
   });
 
-  bool get allPermissionsGranted => hasOverlayPermission && hasAccessibilityPermission;
+  bool get allPermissionsGranted => hasAccessibilityPermission;
 
   List<String> get missingPermissions {
     final missing = <String>[];

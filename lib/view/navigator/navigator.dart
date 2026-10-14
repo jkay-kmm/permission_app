@@ -6,7 +6,6 @@ import '../calendar/calendar.dart';
 import '../home/home.dart';
 import '../setting/setting.dart';
 
-
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
@@ -35,16 +34,9 @@ class _MainScreenState extends State<MainScreen> {
         child: _screens[_currentIndex],
       ),
       bottomNavigationBar: Container(
-        height: 85,
+        height: 80,
         decoration: const BoxDecoration(
           color: Color(0xFFFFFAF0),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black,
-              blurRadius: 10,
-              offset: Offset(0, -2),
-            ),
-          ],
         ),
         child: Padding(
           padding: const EdgeInsets.only(
@@ -77,13 +69,13 @@ class _MainScreenState extends State<MainScreen> {
                   'assets/image/home.svg',
                   width: 24,
                   height: 24,
-                  colorFilter: ColorFilter.mode(Colors.black, BlendMode.srcIn),
+                  colorFilter: const ColorFilter.mode(Colors.black, BlendMode.srcIn),
                 ),
                 activeIcon: SvgPicture.asset(
                   'assets/image/home.svg',
                   width: 28,
                   height: 28,
-                  colorFilter: ColorFilter.mode(Colors.orange, BlendMode.srcIn),
+                  colorFilter: const ColorFilter.mode(Colors.orange, BlendMode.srcIn),
                 ),
                 label: "Trang chủ",
               ),
@@ -92,7 +84,7 @@ class _MainScreenState extends State<MainScreen> {
                   'assets/image/calendar.svg',
                   width: 24,
                   height: 24,
-                  colorFilter: ColorFilter.mode(Colors.black, BlendMode.srcIn),
+                  colorFilter: const ColorFilter.mode(Colors.black, BlendMode.srcIn),
                 ),
                 activeIcon: SvgPicture.asset(
                   'assets/image/calendar.svg',

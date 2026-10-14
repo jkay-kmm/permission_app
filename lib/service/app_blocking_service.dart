@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../model/blocking_rule.dart';
 import '../model/app_block_info.dart';
@@ -21,6 +22,9 @@ class AppBlockingService {
   static const String _dailyUsageKey = 'flutter.daily_usage_tracking';
   static const String _sessionUsageKey = 'flutter.session_usage_tracking';
   static const String _lastResetDateKey = 'flutter.last_reset_date';
+  static const MethodChannel _nativeChannel = MethodChannel(
+    'com.example.brainrot/usage',
+  );
 
   List<BlockingRule> _rules = [];
   List<FocusMode> _focusModes = [];
@@ -44,6 +48,7 @@ class AppBlockingService {
   Future<void> initialize() async {
     await _loadRules();
     await _loadFocusModes();
+    await _syncNativeData();
     await _loadUsageTracking();
     await _loadLastResetDate();
     await _checkAndResetDailyUsage();
@@ -337,6 +342,7 @@ class AppBlockingService {
         _rules.map((rule) => rule.toJson()).toList(),
       );
       await prefs.setString(_rulesKey, rulesJson);
+      await _syncNativeData();
     } catch (e) {
       debugPrint('❌ [BLOCKING] Error saving rules: $e');
     }
@@ -366,8 +372,23 @@ class AppBlockingService {
         _focusModes.map((mode) => mode.toJson()).toList(),
       );
       await prefs.setString(_focusModesKey, focusModesJson);
+      await _syncNativeData();
     } catch (e) {
       print(e);
+    }
+  }
+
+  Future<void> _syncNativeData() async {
+    if (defaultTargetPlatform != TargetPlatform.android) return;
+    try {
+      await _nativeChannel.invokeMethod('syncBlockingData', {
+        'rulesJson': jsonEncode(_rules.map((rule) => rule.toJson()).toList()),
+        'focusModesJson': jsonEncode(
+          _focusModes.map((mode) => mode.toJson()).toList(),
+        ),
+      });
+    } catch (e) {
+      debugPrint('Error syncing blocking data to Android: $e');
     }
   }
 
