@@ -1,6 +1,7 @@
 import 'package:brainrot/view_model/app_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'daily_reminder_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -76,6 +77,20 @@ class SettingsScreen extends StatelessWidget {
                     color: cardColor,
                     dividerColor: dividerColor,
                     children: [
+                      _SettingsTile(
+                        icon: Icons.notifications_active_outlined,
+                        iconColor: const Color(0xFFF27A3D),
+                        iconBackground: const Color(0xFFFFF0E5),
+                        title: 'Nhắc nhở lúc 21:00',
+                        subtitle: 'Thông báo tổng thời gian dùng điện thoại mỗi tối',
+                        textColor: primaryText,
+                        secondaryTextColor: secondaryText,
+                        onTap: () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => const DailyReminderScreen(),
+                          ),
+                        ),
+                      ),
                       _SettingsTile(
                         icon: Icons.visibility_outlined,
                         iconColor: const Color(0xFF2B9A73),

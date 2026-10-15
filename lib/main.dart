@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'app.dart';
+import 'view/noti/background_task.dart';
+import 'view/noti/notification_service.dart';
 import 'service/daily_mood_service.dart';
 import 'service/usage_history_service.dart';
 
@@ -15,6 +17,10 @@ void main() async {
 
     final moodService = DailyMoodService();
     await moodService.initialize();
+
+    // Khởi tạo thông báo cục bộ và tác vụ nền nhắc nhở hằng ngày lúc 21:00
+    await NotificationService().initialize();
+    await BackgroundTaskManager.initialize();
 
     runApp(const BrainrotApp());
   } catch (e, stackTrace) {

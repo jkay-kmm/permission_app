@@ -49,6 +49,25 @@ class MainActivity : FlutterActivity() {
                     val usageData = getTodayUsageStats()
                     result.success(usageData)
                 }
+                "openDigitalWellbeing" -> {
+                    try {
+                        val intent = Intent("com.google.android.apps.wellbeing.action.DASHBOARD").apply {
+                            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                        }
+                        startActivity(intent)
+                        result.success(true)
+                    } catch (e: Exception) {
+                        try {
+                            val intent = Intent(Settings.ACTION_SETTINGS).apply {
+                                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                            }
+                            startActivity(intent)
+                            result.success(true)
+                        } catch (e2: Exception) {
+                            result.success(false)
+                        }
+                    }
+                }
                 "getCurrentTimeInfo" -> {
                     val currentTime = System.currentTimeMillis()
                     val calendar = Calendar.getInstance()

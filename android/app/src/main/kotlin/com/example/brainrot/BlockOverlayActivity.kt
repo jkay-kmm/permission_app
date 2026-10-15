@@ -2,11 +2,17 @@ package com.example.brainrot
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.Typeface
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
 import android.widget.Button
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 
 class BlockOverlayActivity : Activity() {
@@ -44,72 +50,125 @@ class BlockOverlayActivity : Activity() {
     }
     
     private fun setupUI() {
-        // Create a simple layout programmatically
-        val layout = android.widget.LinearLayout(this).apply {
-            orientation = android.widget.LinearLayout.VERTICAL
-            setPadding(64, 64, 64, 64)
-            setBackgroundColor(android.graphics.Color.parseColor("#FFE4B5"))
+        // Root container with warm cream background matching Flutter theme
+        val rootLayout = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            gravity = Gravity.CENTER
+            setPadding(48, 64, 48, 64)
+            setBackgroundColor(Color.parseColor("#FFF8EF"))
+        }
+
+        // Inner Card Container
+        val cardLayout = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            gravity = Gravity.CENTER_HORIZONTAL
+            setPadding(56, 64, 56, 56)
+            background = GradientDrawable().apply {
+                shape = GradientDrawable.RECTANGLE
+                cornerRadius = 64f
+                setColor(Color.WHITE)
+            }
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+            elevation = 16f
         }
         
-        // App blocked icon/image
-        val iconView = android.widget.ImageView(this).apply {
-            setImageResource(android.R.drawable.ic_dialog_alert)
-            layoutParams = android.widget.LinearLayout.LayoutParams(
-                200, 200
-            ).apply {
-                gravity = android.view.Gravity.CENTER_HORIZONTAL
-                bottomMargin = 32
+        // App icon container (pastel orange circle)
+        val iconBadge = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            gravity = Gravity.CENTER
+            val sizePx = (80 * resources.displayMetrics.density).toInt()
+            layoutParams = LinearLayout.LayoutParams(sizePx, sizePx).apply {
+                bottomMargin = 36
+            }
+            background = GradientDrawable().apply {
+                shape = GradientDrawable.OVAL
+                setColor(Color.parseColor("#FFF0E5"))
             }
         }
-        layout.addView(iconView)
+
+        val iconView = ImageView(this).apply {
+            val innerSize = (48 * resources.displayMetrics.density).toInt()
+            layoutParams = LinearLayout.LayoutParams(innerSize, innerSize)
+            
+            // Try loading app icon dynamically
+            var loaded = false
+            if (!blockedPackage.isNullOrEmpty()) {
+                try {
+                    val appIcon = packageManager.getApplicationIcon(blockedPackage!!)
+                    setImageDrawable(appIcon)
+                    loaded = true
+                } catch (e: Exception) {
+                    Log.w(TAG, "Could not load icon for $blockedPackage", e)
+                }
+            }
+            if (!loaded) {
+                setImageResource(R.mipmap.ic_launcher)
+            }
+        }
+        iconBadge.addView(iconView)
+        cardLayout.addView(iconBadge)
         
         // Title
         val titleView = TextView(this).apply {
             text = getString(R.string.block_message_title)
-            textSize = 24f
-            setTextColor(android.graphics.Color.parseColor("#333333"))
-            gravity = android.view.Gravity.CENTER
-            layoutParams = android.widget.LinearLayout.LayoutParams(
-                android.widget.LinearLayout.LayoutParams.MATCH_PARENT,
-                android.widget.LinearLayout.LayoutParams.WRAP_CONTENT
+            textSize = 22f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.parseColor("#2B2927"))
+            gravity = Gravity.CENTER
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
             ).apply {
-                bottomMargin = 16
+                bottomMargin = 14
             }
         }
-        layout.addView(titleView)
+        cardLayout.addView(titleView)
         
-        // Message
+        // Message / Reason
         val messageView = TextView(this).apply {
             text = blockReason ?: getString(R.string.block_message_default)
-            textSize = 16f
-            setTextColor(android.graphics.Color.parseColor("#666666"))
-            gravity = android.view.Gravity.CENTER
-            layoutParams = android.widget.LinearLayout.LayoutParams(
-                android.widget.LinearLayout.LayoutParams.MATCH_PARENT,
-                android.widget.LinearLayout.LayoutParams.WRAP_CONTENT
+            textSize = 15f
+            setTextColor(Color.parseColor("#7A736D"))
+            gravity = Gravity.CENTER
+            setLineSpacing(8f, 1f)
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
             ).apply {
-                bottomMargin = 32
+                bottomMargin = 40
             }
         }
-        layout.addView(messageView)
+        cardLayout.addView(messageView)
         
         // Buttons container
-        val buttonsLayout = android.widget.LinearLayout(this).apply {
-            orientation = android.widget.LinearLayout.HORIZONTAL
-            gravity = android.view.Gravity.CENTER
+        val buttonsLayout = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            gravity = Gravity.CENTER
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
         }
         
-        // OK Button
+        // OK Button (Primary Action)
         val okButton = Button(this).apply {
             text = getString(R.string.block_button_ok)
-            setBackgroundColor(android.graphics.Color.parseColor("#FF6B35"))
-            setTextColor(android.graphics.Color.WHITE)
-            layoutParams = android.widget.LinearLayout.LayoutParams(
-                0,
-                android.widget.LinearLayout.LayoutParams.WRAP_CONTENT,
-                1f
+            textSize = 15f
+            typeface = Typeface.DEFAULT_BOLD
+            setTextColor(Color.WHITE)
+            background = GradientDrawable().apply {
+                shape = GradientDrawable.RECTANGLE
+                cornerRadius = 36f
+                setColor(Color.parseColor("#F27A3D"))
+            }
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                (48 * resources.displayMetrics.density).toInt()
             ).apply {
-                rightMargin = if (canBypass) 16 else 0
+                bottomMargin = if (canBypass) 16 else 0
             }
             setOnClickListener {
                 goToHomeScreen()
@@ -122,12 +181,17 @@ class BlockOverlayActivity : Activity() {
         if (canBypass) {
             val emergencyButton = Button(this).apply {
                 text = getString(R.string.block_button_emergency)
-                setBackgroundColor(android.graphics.Color.parseColor("#FF9500"))
-                setTextColor(android.graphics.Color.WHITE)
-                layoutParams = android.widget.LinearLayout.LayoutParams(
-                    0,
-                    android.widget.LinearLayout.LayoutParams.WRAP_CONTENT,
-                    1f
+                textSize = 14f
+                typeface = Typeface.DEFAULT_BOLD
+                setTextColor(Color.parseColor("#F27A3D"))
+                background = GradientDrawable().apply {
+                    shape = GradientDrawable.RECTANGLE
+                    cornerRadius = 36f
+                    setColor(Color.parseColor("#FFF0E5"))
+                }
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    (46 * resources.displayMetrics.density).toInt()
                 )
                 setOnClickListener {
                     showEmergencyAccessDialog()
@@ -136,23 +200,22 @@ class BlockOverlayActivity : Activity() {
             buttonsLayout.addView(emergencyButton)
         }
         
-        layout.addView(buttonsLayout)
-        
-        setContentView(layout)
+        cardLayout.addView(buttonsLayout)
+        rootLayout.addView(cardLayout)
+        setContentView(rootLayout)
     }
     
     private fun showEmergencyAccessDialog() {
         val builder = android.app.AlertDialog.Builder(this)
-        builder.setTitle("Emergency Access")
-        builder.setMessage("Are you sure you need emergency access to this app? This will temporarily override your blocking rules.")
+        builder.setTitle("Quyền truy cập khẩn cấp")
+        builder.setMessage("Bạn có chắc chắn cần truy cập khẩn cấp ứng dụng này? Điều này sẽ tạm thời bỏ qua quy tắc chặn.")
         
-        builder.setPositiveButton("Yes, I need access") { _, _ ->
-            // Grant temporary access (you could implement a time-limited bypass here)
+        builder.setPositiveButton("Đồng ý") { _, _ ->
             Log.d(TAG, "Emergency access granted for: $blockedPackage")
             finish() // Allow the app to continue
         }
         
-        builder.setNegativeButton("Cancel") { dialog, _ ->
+        builder.setNegativeButton("Hủy") { dialog, _ ->
             dialog.dismiss()
         }
         
