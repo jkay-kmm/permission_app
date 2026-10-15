@@ -197,12 +197,14 @@ class _CalendarScreenState extends State<CalendarScreen> {
     return Scaffold(
       backgroundColor: background,
       appBar: AppBar(
-        title: Text(
-          'Lịch & Báo cáo',
-          style: TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.w800,
-            color: primaryText,
+        title: Center(
+          child: Text(
+            'Lịch & Báo cáo',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w800,
+              color: primaryText,
+            ),
           ),
         ),
         backgroundColor: Colors.transparent,
@@ -241,10 +243,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 ],
               ),
             ),
-            const SizedBox(height: 24),
+            // const SizedBox(height: 24),
 
             // Weekly Bar Chart
-            _buildWeeklyUsageCard(cardColor, primaryText, secondaryText),
+            // _buildWeeklyUsageCard(cardColor, primaryText, secondaryText),
             const SizedBox(height: 24),
 
             // SƠ ĐỒ TRÒN DIGITAL WELLBEING BREAKDOWN (Cách 1)
@@ -537,25 +539,25 @@ class _CalendarScreenState extends State<CalendarScreen> {
             children: [
               Row(
                 children: [
-                  Container(
-                    width: 36,
-                    height: 36,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFFFF0E5),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: const Icon(
-                      Icons.donut_large_rounded,
-                      color: CalendarScreen._accent,
-                      size: 20,
-                    ),
-                  ),
-                  const SizedBox(width: 10),
+                  // Container(
+                  //   width: 36,
+                  //   height: 36,
+                  //   decoration: BoxDecoration(
+                  //     color: const Color(0xFFFFF0E5),
+                  //     borderRadius: BorderRadius.circular(12),
+                  //   ),
+                  //   child: const Icon(
+                  //     Icons.donut_large_rounded,
+                  //     color: CalendarScreen._accent,
+                  //     size: 20,
+                  //   ),
+                  // ),
+                  // const SizedBox(width: 10),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Phân bổ ứng dụng',
+                        'Thống kê thời gian sử dụng',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w800,
@@ -570,22 +572,22 @@ class _CalendarScreenState extends State<CalendarScreen> {
                   ),
                 ],
               ),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                decoration: BoxDecoration(
-                  color: CalendarScreen._accent.withOpacity(0.12),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Text(
-                  'Digital Wellbeing',
-                  style: TextStyle(
-                    fontSize: 11,
-                    fontWeight: FontWeight.bold,
-                    color: CalendarScreen._accent,
-                  ),
-                ),
-              ),
+              // Container(
+              //   padding:
+              //       const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+              //   decoration: BoxDecoration(
+              //     color: CalendarScreen._accent.withOpacity(0.12),
+              //     borderRadius: BorderRadius.circular(12),
+              //   ),
+              //   child: const Text(
+              //     'Digital Wellbeing',
+              //     style: TextStyle(
+              //       fontSize: 11,
+              //       fontWeight: FontWeight.bold,
+              //       color: CalendarScreen._accent,
+              //     ),
+              //   ),
+              // ),
             ],
           ),
           const SizedBox(height: 24),
@@ -747,20 +749,20 @@ class _CalendarScreenState extends State<CalendarScreen> {
             const Divider(height: 1),
             const SizedBox(height: 12),
 
-            // Nút mở Native Digital Wellbeing của hệ điều hành
-            Center(
-              child: TextButton.icon(
-                onPressed: _openNativeDigitalWellbeing,
-                icon: const Icon(Icons.open_in_new_rounded, size: 16),
-                label: const Text(
-                  'Mở Digital Wellbeing của Android',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                style: TextButton.styleFrom(
-                  foregroundColor: CalendarScreen._accent,
-                ),
-              ),
-            ),
+            // // Nút mở Native Digital Wellbeing của hệ điều hành
+            // Center(
+            //   child: TextButton.icon(
+            //     onPressed: _openNativeDigitalWellbeing,
+            //     icon: const Icon(Icons.open_in_new_rounded, size: 16),
+            //     label: const Text(
+            //       'Mở Digital Wellbeing của Android',
+            //       style: TextStyle(fontWeight: FontWeight.bold),
+            //     ),
+            //     style: TextButton.styleFrom(
+            //       foregroundColor: CalendarScreen._accent,
+            //     ),
+            //   ),
+            // ),
           ],
         ],
       ),

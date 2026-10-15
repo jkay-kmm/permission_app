@@ -35,8 +35,6 @@ class SettingsScreen extends StatelessWidget {
                 children: [
                   _PageHeader(
                       primaryText: primaryText, secondaryText: secondaryText),
-                  const SizedBox(height: 22),
-                  const _WellbeingCard(),
                   const SizedBox(height: 28),
                   _SectionLabel('TÙY CHỈNH', color: secondaryText),
                   const SizedBox(height: 10),
@@ -82,7 +80,8 @@ class SettingsScreen extends StatelessWidget {
                         iconColor: const Color(0xFFF27A3D),
                         iconBackground: const Color(0xFFFFF0E5),
                         title: 'Nhắc nhở lúc 21:00',
-                        subtitle: 'Thông báo tổng thời gian dùng điện thoại mỗi tối',
+                        subtitle:
+                            'Thông báo tổng thời gian dùng điện thoại mỗi tối',
                         textColor: primaryText,
                         secondaryTextColor: secondaryText,
                         onTap: () => Navigator.of(context).push(
@@ -326,104 +325,29 @@ class _PageHeader extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Cài đặt',
-          style: TextStyle(
-            color: primaryText,
-            fontSize: 30,
-            height: 1.1,
-            fontWeight: FontWeight.w800,
-            letterSpacing: -.7,
+        Center(
+          child: Text(
+            'Cài đặt',
+            style: TextStyle(
+              color: primaryText,
+              fontSize: 18,
+              height: 1.1,
+              fontWeight: FontWeight.w800,
+              letterSpacing: -.7,
+            ),
           ),
         ),
-        const SizedBox(height: 7),
-        Text(
-          'Cá nhân hóa trải nghiệm của bạn',
-          style: TextStyle(color: secondaryText, fontSize: 15),
-        ),
+        // const SizedBox(height: 7),
+        // Text(
+        //   'Cá nhân hóa trải nghiệm của bạn',
+        //   style: TextStyle(color: secondaryText, fontSize: 15),
+        // ),
       ],
     );
   }
 }
 
-class _WellbeingCard extends StatelessWidget {
-  const _WellbeingCard();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [Color(0xFFF58A4E), Color(0xFFEF6941)],
-        ),
-        borderRadius: BorderRadius.circular(24),
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0xFFF27A3D).withOpacity(.24),
-            blurRadius: 24,
-            offset: const Offset(0, 10),
-          ),
-        ],
-      ),
-      child: Stack(
-        children: [
-          const Positioned(
-            right: -16,
-            top: -20,
-            child: Icon(Icons.spa_rounded, size: 112, color: Color(0x24FFFFFF)),
-          ),
-          Row(
-            children: [
-              Container(
-                width: 54,
-                height: 54,
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(.18),
-                  borderRadius: BorderRadius.circular(17),
-                  border: Border.all(color: Colors.white.withOpacity(.22)),
-                ),
-                child: const Icon(
-                  Icons.self_improvement_rounded,
-                  color: Colors.white,
-                  size: 29,
-                ),
-              ),
-              const SizedBox(width: 15),
-              const Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Không gian của bạn',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 17,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                    SizedBox(height: 5),
-                    Text(
-                      'Ít màn hình hơn, nhiều cuộc sống hơn.',
-                      style: TextStyle(
-                        color: Color(0xE6FFFFFF),
-                        fontSize: 13,
-                        height: 1.35,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
+//
 class _SectionLabel extends StatelessWidget {
   const _SectionLabel(this.label, {required this.color});
   final String label;

@@ -158,11 +158,11 @@ class _BlockingScreenState extends State<BlockingScreen>
                       ),
                       const SizedBox(height: 20),
 
-                      // Hero Card
-                      _BlockingHeroCard(
-                        activeRulesCount: blockingVM.activeRulesCount,
-                        timeUntilReset: blockingVM.formattedTimeUntilReset,
-                      ),
+                      // // Hero Card
+                      // _BlockingHeroCard(
+                      //   activeRulesCount: blockingVM.activeRulesCount,
+                      //   timeUntilReset: blockingVM.formattedTimeUntilReset,
+                      // ),
                       const SizedBox(height: 20),
 
                       // Permission Warning Banner if not granted
@@ -193,9 +193,7 @@ class _BlockingScreenState extends State<BlockingScreen>
                         for (final type in BlockingType.values) ...[
                           _buildTypeSection(
                             type: type,
-                            rules: rules
-                                .where((r) => r.type == type)
-                                .toList(),
+                            rules: rules.where((r) => r.type == type).toList(),
                             blockingVM: blockingVM,
                             cardColor: cardColor,
                             dividerColor: dividerColor,
@@ -382,161 +380,159 @@ class _PageHeader extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Quy tắc chặn',
-          style: TextStyle(
-            color: primaryText,
-            fontSize: 30,
-            height: 1.1,
-            fontWeight: FontWeight.w800,
-            letterSpacing: -.7,
+        Center(
+          child: Text(
+            'Quy tắc chặn',
+            style: TextStyle(
+              color: primaryText,
+              fontSize: 18,
+              height: 1.1,
+              fontWeight: FontWeight.w800,
+              letterSpacing: -.7,
+            ),
           ),
-        ),
-        const SizedBox(height: 7),
-        Text(
-          'Kiểm soát thời gian và sự tập trung của bạn',
-          style: TextStyle(color: secondaryText, fontSize: 15),
         ),
       ],
     );
   }
 }
 
-class _BlockingHeroCard extends StatelessWidget {
-  const _BlockingHeroCard({
-    required this.activeRulesCount,
-    required this.timeUntilReset,
-  });
+// class _BlockingHeroCard extends StatelessWidget {
+//   const _BlockingHeroCard({
+//     required this.activeRulesCount,
+//     required this.timeUntilReset,
+//   });
 
-  final int activeRulesCount;
-  final String timeUntilReset;
+//   final int activeRulesCount;
+//   final String timeUntilReset;
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [Color(0xFFF58A4E), Color(0xFFEF6941)],
-        ),
-        borderRadius: BorderRadius.circular(24),
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0xFFF27A3D).withOpacity(.24),
-            blurRadius: 24,
-            offset: const Offset(0, 10),
-          ),
-        ],
-      ),
-      child: Stack(
-        children: [
-          const Positioned(
-            right: -16,
-            top: -20,
-            child: Icon(
-              Icons.shield_outlined,
-              size: 112,
-              color: Color(0x24FFFFFF),
-            ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Container(
-                    width: 48,
-                    height: 48,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(.18),
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: Colors.white.withOpacity(.22)),
-                    ),
-                    child: const Icon(
-                      Icons.do_not_disturb_on_rounded,
-                      color: Colors.white,
-                      size: 26,
-                    ),
-                  ),
-                  const SizedBox(width: 14),
-                  const Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Trạng thái bảo vệ',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 17,
-                            fontWeight: FontWeight.w800,
-                          ),
-                        ),
-                        SizedBox(height: 3),
-                        Text(
-                          'Ngăn chặn mở app gây nghiện tự động',
-                          style: TextStyle(
-                            color: Color(0xE6FFFFFF),
-                            fontSize: 13,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 18),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-                decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(.12),
-                  borderRadius: BorderRadius.circular(14),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        const Icon(Icons.check_circle_outline,
-                            size: 16, color: Colors.white70),
-                        const SizedBox(width: 6),
-                        Text(
-                          '$activeRulesCount quy tắc đang bật',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 13,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        const Icon(Icons.update_rounded,
-                            size: 16, color: Colors.white70),
-                        const SizedBox(width: 6),
-                        Text(
-                          'Reset sau $timeUntilReset',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 13,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       padding: const EdgeInsets.all(20),
+//       height: 200, // Fixed height to give Stack a finite size
+//       decoration: BoxDecoration(
+//         gradient: const LinearGradient(
+//           begin: Alignment.topLeft,
+//           end: Alignment.bottomRight,
+//           colors: [Color(0xFFF58A4E), Color(0xFFEF6941)],
+//         ),
+//         borderRadius: BorderRadius.circular(24),
+//         boxShadow: [
+//           BoxShadow(
+//             color: const Color(0xFFF27A3D).withOpacity(.24),
+//             blurRadius: 24,
+//             offset: const Offset(0, 10),
+//           ),
+//         ],
+//       ),
+//       child: Stack(
+//         children: [
+//           const Positioned(
+//             right: -16,
+//             top: -20,
+//             child: Icon(
+//               Icons.shield_outlined,
+//               size: 112,
+//               color: Color(0x24FFFFFF),
+//             ),
+//           ),
+//           // Column(
+//           //   crossAxisAlignment: CrossAxisAlignment.start,
+//           //   children: [
+//           //     // Row(
+//           //     //   children: [
+//           //     //     Container(
+//           //     //       width: 48,
+//           //     //       height: 48,
+//           //     //       decoration: BoxDecoration(
+//           //     //         color: Colors.white.withOpacity(.18),
+//           //     //         borderRadius: BorderRadius.circular(16),
+//           //     //         border: Border.all(color: Colors.white.withOpacity(.22)),
+//           //     //       ),
+//           //     //       child: const Icon(
+//           //     //         Icons.do_not_disturb_on_rounded,
+//           //     //         color: Colors.white,
+//           //     //         size: 26,
+//           //     //       ),
+//           //     //     ),
+//           //     //     const SizedBox(width: 14),
+//           //     //     const Expanded(
+//           //     //       child: Column(
+//           //     //         crossAxisAlignment: CrossAxisAlignment.start,
+//           //     //         children: [
+//           //     //           Text(
+//           //     //             'Trạng thái bảo vệ',
+//           //     //             style: TextStyle(
+//           //     //               color: Colors.white,
+//           //     //               fontSize: 17,
+//           //     //               fontWeight: FontWeight.w800,
+//           //     //             ),
+//           //     //           ),
+//           //     //           SizedBox(height: 3),
+//           //     //           Text(
+//           //     //             'Ngăn chặn mở app gây nghiện tự động',
+//           //     //             style: TextStyle(
+//           //     //               color: Color(0xE6FFFFFF),
+//           //     //               fontSize: 13,
+//           //     //             ),
+//           //     //           ),
+//           //     //         ],
+//           //     //       ),
+//           //     //     ),
+//           //     //   ],
+//           //     // ),
+//           //     const SizedBox(height: 18),
+//           //     Container(
+//           //       padding:
+//           //           const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+//           //       decoration: BoxDecoration(
+//           //         color: Colors.black.withOpacity(.12),
+//           //         borderRadius: BorderRadius.circular(14),
+//           //       ),
+//           //       child: Row(
+//           //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//           //         children: [
+//           //           Row(
+//           //             children: [
+//           //               const Icon(Icons.check_circle_outline,
+//           //                   size: 16, color: Colors.white70),
+//           //               const SizedBox(width: 6),
+//           //               Text(
+//           //                 '$activeRulesCount quy tắc đang bật',
+//           //                 style: const TextStyle(
+//           //                   color: Colors.white,
+//           //                   fontSize: 13,
+//           //                   fontWeight: FontWeight.w600,
+//           //                 ),
+//           //               ),
+//           //             ],
+//           //           ),
+//           //           Row(
+//           //             children: [
+//           //               const Icon(Icons.update_rounded,
+//           //                   size: 16, color: Colors.white70),
+//           //               const SizedBox(width: 6),
+//           //               Text(
+//           //                 'Reset sau $timeUntilReset',
+//           //                 style: const TextStyle(
+//           //                   color: Colors.white,
+//           //                   fontSize: 13,
+//           //                   fontWeight: FontWeight.w600,
+//           //                 ),
+//           //               ),
+//           //             ],
+//           //           ),
+//           //         ],
+//           //       ),
+//           //     ),
+//           //   ],
+//           // ),
+//         ],
+//       ),
+//     );
+//   }
+// }
 
 class _PermissionBanner extends StatelessWidget {
   const _PermissionBanner({
@@ -549,8 +545,7 @@ class _PermissionBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bgColor =
-        isDark ? const Color(0xFF33261A) : const Color(0xFFFFF3E0);
+    final bgColor = isDark ? const Color(0xFF33261A) : const Color(0xFFFFF3E0);
     const accentColor = Color(0xFFF27A3D);
 
     return Container(
@@ -755,8 +750,8 @@ class _RuleTile extends StatelessWidget {
                 if (rule.targetPackages.isNotEmpty) ...[
                   const SizedBox(height: 4),
                   Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 7, vertical: 2),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
                     decoration: BoxDecoration(
                       color: meta.background,
                       borderRadius: BorderRadius.circular(6),
@@ -1006,7 +1001,8 @@ class _AppPickerBottomSheetState extends State<_AppPickerBottomSheet> {
                       controller: _searchController,
                       decoration: InputDecoration(
                         hintText: 'Tìm kiếm ứng dụng...',
-                        hintStyle: TextStyle(color: secondaryText, fontSize: 14),
+                        hintStyle:
+                            TextStyle(color: secondaryText, fontSize: 14),
                         prefixIcon: Icon(Icons.search_rounded,
                             color: secondaryText, size: 20),
                         suffixIcon: _searchController.text.isNotEmpty

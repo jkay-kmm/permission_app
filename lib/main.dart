@@ -24,9 +24,6 @@ void main() async {
 
     runApp(const BrainrotApp());
   } catch (e, stackTrace) {
-    debugPrint('Error initializing app: $e');
-    debugPrint('Stack trace: $stackTrace');
-
     runApp(MaterialApp(
       home: Scaffold(
         body: Center(
