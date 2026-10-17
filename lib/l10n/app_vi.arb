@@ -1,0 +1,144 @@
+{
+  "@@locale": "vi",
+
+  "settingsTitle": "Cài đặt",
+  "sectionCustomize": "TÙY CHỈNH",
+  "sectionDigitalWellbeing": "SỨC KHỎE SỐ",
+  "sectionDigitalHealth": "SỨC KHỎE SỐ",
+  "sectionSupport": "HỖ TRỢ",
+
+  "language": "Ngôn ngữ",
+  "languageTitle": "Ngôn ngữ",
+  "languageSubtitle": "Ngôn ngữ hiển thị trong ứng dụng",
+  "languagePickerTitle": "Ngôn ngữ",
+  "languagePickerSubtitle": "Chọn ngôn ngữ bạn muốn sử dụng",
+  "languageVietnamese": "Tiếng Việt",
+  "languageEnglish": "Tiếng Anh",
+
+  "appearance": "Giao diện",
+  "themeTitle": "Giao diện",
+  "themeSubtitle": "Chọn chế độ sáng hoặc tối",
+  "themePickerTitle": "Giao diện",
+  "themePickerSubtitle": "Chọn giao diện phù hợp với bạn",
+  "appearanceSubtitle": "Chọn chế độ sáng hoặc tối",
+  "appearancePickerSubtitle": "Chọn giao diện phù hợp với bạn",
+  "themeSystem": "Theo hệ thống",
+  "themeLight": "Sáng",
+  "themeDark": "Tối",
+
+  "reminderTitle": "Nhắc nhở lúc 21:00",
+  "reminderSubtitle": "Thông báo tổng thời gian dùng điện thoại mỗi tối",
+  "dailyReminderTitle": "Nhắc nhở lúc 21:00",
+  "dailyReminderSubtitle": "Thông báo tổng thời gian dùng điện thoại mỗi tối",
+
+  "surroundingWatchTitle": "Quan sát xung quanh",
+  "surroundingWatchSubtitle": "Nhắc bạn rời mắt khỏi màn hình",
+  "lookAroundTitle": "Quan sát xung quanh",
+  "lookAroundSubtitle": "Nhắc bạn rời mắt khỏi màn hình",
+
+  "sleepModeTitle": "Chế độ đi ngủ",
+  "sleepModeSubtitle": "Tạo khoảng nghỉ trước giờ ngủ",
+  "bedtimeTitle": "Chế độ đi ngủ",
+  "bedtimeSubtitle": "Tạo khoảng nghỉ trước giờ ngủ",
+
+  "comingSoon": "Sắp có",
+  "comingSoonBadge": "Sắp có",
+  "comingSoonMessage": "Tính năng này đang được hoàn thiện và sẽ sớm có mặt trong bản cập nhật tiếp theo.",
+  "understood": "Đã hiểu",
+  "gotIt": "Đã hiểu",
+
+  "contactUsTitle": "Liên hệ với chúng tôi",
+  "contactUsSubtitle": "Góp ý hoặc báo cáo sự cố",
+  "contactTitle": "Liên hệ với chúng tôi",
+  "contactSubtitle": "Góp ý hoặc báo cáo sự cố",
+
+  "privacyPolicyTitle": "Chính sách quyền riêng tư",
+  "privacyPolicySubtitle": "Cách Brainrot bảo vệ dữ liệu của bạn",
+  "privacyTitle": "Chính sách quyền riêng tư",
+  "privacySubtitle": "Cách Brainrot bảo vệ dữ liệu của bạn",
+
+  "version": "Phiên bản",
+
+  "appVersion": "Phiên bản {version}",
+  "@appVersion": {
+    "placeholders": { "version": { "type": "String" } }
+  },
+
+  "navHome": "Trang chủ",
+  "navCalendar": "Lịch",
+  "navBlock": "Chặn",
+  "navSettings": "Cài đặt",
+
+  "blockingRulesTitle": "Quy tắc chặn",
+  "blockAppFab": "Chặn ứng dụng",
+  "rulesListLabel": "{count} quy tắc",
+  "@rulesListLabel": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "noAvailableApps": "Không tìm thấy ứng dụng nào",
+  "addedBlockRule": "Đã thêm quy tắc chặn cho {appName}",
+  "@addedBlockRule": {
+    "placeholders": { "appName": { "type": "String" } }
+  },
+  "blockTypeAllDay": "Chặn cả ngày",
+  "blockTypeTimeLimit": "Giới hạn thời gian",
+  "blockTypeSchedule": "Lịch trình",
+  "blockTypeFocusMode": "Chế độ tập trung",
+  "confirmDeleteTitle": "Xóa quy tắc",
+  "confirmDeleteMessage": "Bạn có chắc muốn xóa \"{ruleName}\" không?",
+  "@confirmDeleteMessage": {
+    "placeholders": { "ruleName": { "type": "String" } }
+  },
+  "cancel": "Hủy",
+  "delete": "Xóa",
+  "permissionBannerTitle": "Cần quyền Trợ năng",
+  "permissionBannerSubtitle": "Bật dịch vụ Trợ năng để chặn ứng dụng khi được mở.",
+  "permissionBannerButton": "Bật",
+  "appsApplied": "{count} ứng dụng",
+  "@appsApplied": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "deleteTooltip": "Xóa quy tắc",
+  "emptyRulesTitle": "Chưa có quy tắc nào",
+  "emptyRulesSubtitle": "Nhấn nút bên dưới để chặn ứng dụng đầu tiên và lấy lại sự tập trung.",
+  "addFirstApp": "Chặn ứng dụng",
+  "appPickerTitle": "Chọn ứng dụng",
+  "appPickerSubtitle": "Chọn ứng dụng bạn muốn chặn",
+  "searchAppsHint": "Tìm kiếm ứng dụng...",
+  "noAppsFound": "Không tìm thấy ứng dụng",
+
+  "calendarReportTitle": "Báo cáo sử dụng",
+  "usageStats": "Thời gian dùng ứng dụng",
+  "totalTime": "Tổng thời gian",
+  "noUsageData": "Không có dữ liệu sử dụng ngày này",
+  "topAppsTitle": "ỨNG DỤNG NHIỀU NHẤT",
+  "todayLabel": "Hôm nay, {day}/{month}",
+  "@todayLabel": {
+    "placeholders": {
+      "day": { "type": "int" },
+      "month": { "type": "int" }
+    }
+  },
+
+  "loadingUsage": "Đang tải dữ liệu...",
+  "retry": "Thử lại",
+  "homeScoreSubtitle": "Điểm sức khỏe não bộ",
+  "totalScreenTime": "Tổng thời gian màn hình",
+  "appsLabel": "Ứng dụng",
+  "applicationsLabel": "Ứng dụng",
+
+  "reminderScreenTitle": "Nhắc nhở hàng ngày",
+  "todayPhoneUsage": "Thời gian dùng điện thoại hôm nay",
+  "noPermission": "Chưa cấp quyền",
+  "permissionWarning": "Chưa cấp quyền theo dõi sử dụng. Hãy cấp quyền để theo dõi thời gian màn hình.",
+  "grantPermission": "Cấp quyền",
+  "notificationPermissionRequest": "Cần quyền thông báo để gửi nhắc nhở.",
+  "notificationPermissionDenied": "Quyền thông báo bị từ chối.",
+  "testNotificationSuccess": "Đã gửi thông báo thử nghiệm!",
+  "dailyReminderToggleTitle": "Nhắc nhở lúc 21:00",
+  "dailyReminderToggleSubtitle": "Thông báo tổng thời gian dùng điện thoại mỗi tối",
+  "testNotificationButton": "Gửi thông báo thử",
+  "batteryTipTitle": "Tối ưu hóa pin",
+  "batteryTipBody": "Để nhận thông báo nền ổn định, hãy tắt tối ưu hóa pin cho Brainrot. Điều này đảm bảo thông báo được gửi ngay cả khi ứng dụng chạy nền.",
+  "batteryOptimizationLink": "Tắt tối ưu hóa pin"
+}

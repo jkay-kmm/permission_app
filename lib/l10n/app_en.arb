@@ -1,6 +1,144 @@
 {
- "titleHome":"Điểm số của bạn sẽ được đặt lại về 100 vào lúc nửa đêm.",
- "titleTotal": "Tổng thời gian sử dụng màn hình",
-  "titleApp": "App",
-  "titleApplications": "Ứng dụng"
+  "@@locale": "en",
+
+  "settingsTitle": "Settings",
+  "sectionCustomize": "CUSTOMIZE",
+  "sectionDigitalWellbeing": "DIGITAL WELLBEING",
+  "sectionDigitalHealth": "DIGITAL HEALTH",
+  "sectionSupport": "SUPPORT",
+
+  "language": "Language",
+  "languageTitle": "Language",
+  "languageSubtitle": "Display language of the app",
+  "languagePickerTitle": "Language",
+  "languagePickerSubtitle": "Choose the language you want to use",
+  "languageVietnamese": "Vietnamese",
+  "languageEnglish": "English",
+
+  "appearance": "Appearance",
+  "themeTitle": "Appearance",
+  "themeSubtitle": "Choose light or dark mode",
+  "themePickerTitle": "Appearance",
+  "themePickerSubtitle": "Choose the appearance that suits you",
+  "appearanceSubtitle": "Choose light or dark mode",
+  "appearancePickerSubtitle": "Choose the appearance that suits you",
+  "themeSystem": "System default",
+  "themeLight": "Light",
+  "themeDark": "Dark",
+
+  "reminderTitle": "Reminder at 21:00",
+  "reminderSubtitle": "Get your total screen time notification every evening",
+  "dailyReminderTitle": "Reminder at 21:00",
+  "dailyReminderSubtitle": "Get your total screen time notification every evening",
+
+  "surroundingWatchTitle": "Look around",
+  "surroundingWatchSubtitle": "Reminds you to look away from the screen",
+  "lookAroundTitle": "Look around",
+  "lookAroundSubtitle": "Reminds you to look away from the screen",
+
+  "sleepModeTitle": "Bedtime mode",
+  "sleepModeSubtitle": "Create a break before bedtime",
+  "bedtimeTitle": "Bedtime mode",
+  "bedtimeSubtitle": "Create a break before bedtime",
+
+  "comingSoon": "Coming soon",
+  "comingSoonBadge": "Coming soon",
+  "comingSoonMessage": "This feature is being polished and will be available in an upcoming update.",
+  "understood": "Got it",
+  "gotIt": "Got it",
+
+  "contactUsTitle": "Contact us",
+  "contactUsSubtitle": "Send feedback or report an issue",
+  "contactTitle": "Contact us",
+  "contactSubtitle": "Send feedback or report an issue",
+
+  "privacyPolicyTitle": "Privacy policy",
+  "privacyPolicySubtitle": "How Brainrot protects your data",
+  "privacyTitle": "Privacy policy",
+  "privacySubtitle": "How Brainrot protects your data",
+
+  "version": "Version",
+
+  "appVersion": "Version {version}",
+  "@appVersion": {
+    "placeholders": { "version": { "type": "String" } }
+  },
+
+  "navHome": "Home",
+  "navCalendar": "Calendar",
+  "navBlock": "Block",
+  "navSettings": "Settings",
+
+  "blockingRulesTitle": "Blocking Rules",
+  "blockAppFab": "Block App",
+  "rulesListLabel": "{count} rules",
+  "@rulesListLabel": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "noAvailableApps": "No available apps found",
+  "addedBlockRule": "Added block rule for {appName}",
+  "@addedBlockRule": {
+    "placeholders": { "appName": { "type": "String" } }
+  },
+  "blockTypeAllDay": "All Day Block",
+  "blockTypeTimeLimit": "Time Limit",
+  "blockTypeSchedule": "Schedule",
+  "blockTypeFocusMode": "Focus Mode",
+  "confirmDeleteTitle": "Delete Rule",
+  "confirmDeleteMessage": "Are you sure you want to delete \"{ruleName}\"?",
+  "@confirmDeleteMessage": {
+    "placeholders": { "ruleName": { "type": "String" } }
+  },
+  "cancel": "Cancel",
+  "delete": "Delete",
+  "permissionBannerTitle": "Accessibility Permission Required",
+  "permissionBannerSubtitle": "Enable Accessibility Service to block apps when they are opened.",
+  "permissionBannerButton": "Enable",
+  "appsApplied": "{count} apps",
+  "@appsApplied": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "deleteTooltip": "Delete rule",
+  "emptyRulesTitle": "No Rules Yet",
+  "emptyRulesSubtitle": "Tap the button below to block your first app and regain focus.",
+  "addFirstApp": "Block an App",
+  "appPickerTitle": "Choose an App",
+  "appPickerSubtitle": "Select an app to block",
+  "searchAppsHint": "Search apps...",
+  "noAppsFound": "No apps found",
+
+  "calendarReportTitle": "Usage Report",
+  "usageStats": "App Usage",
+  "totalTime": "Total time",
+  "noUsageData": "No usage data for this day",
+  "topAppsTitle": "TOP APPS",
+  "todayLabel": "Today, {day}/{month}",
+  "@todayLabel": {
+    "placeholders": {
+      "day": { "type": "int" },
+      "month": { "type": "int" }
+    }
+  },
+
+  "loadingUsage": "Loading usage data...",
+  "retry": "Retry",
+  "homeScoreSubtitle": "Brain health score",
+  "totalScreenTime": "Total Screen Time",
+  "appsLabel": "Apps",
+  "applicationsLabel": "Applications",
+
+  "reminderScreenTitle": "Daily Reminder",
+  "todayPhoneUsage": "Today's phone usage",
+  "noPermission": "No Permission",
+  "permissionWarning": "Usage permission not granted. Grant permission to track your screen time.",
+  "grantPermission": "Grant",
+  "notificationPermissionRequest": "Notification permission is required to send reminders.",
+  "notificationPermissionDenied": "Notification permission denied.",
+  "testNotificationSuccess": "Test notification sent!",
+  "dailyReminderToggleTitle": "Reminder at 21:00",
+  "dailyReminderToggleSubtitle": "Get your total screen time notification every evening",
+  "testNotificationButton": "Send Test Notification",
+  "batteryTipTitle": "Battery Optimization",
+  "batteryTipBody": "For reliable background reminders, disable battery optimization for Brainrot. This ensures notifications are delivered even when the app is in the background.",
+  "batteryOptimizationLink": "Disable battery optimization"
 }

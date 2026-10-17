@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
-import 'l10n/l10n.dart';
+import 'l10n/app_localizations.dart';
 import 'router/app_router.dart';
 import 'view_model/app_view_model.dart';
 import 'view_model/home_view_model.dart';
@@ -57,12 +57,12 @@ class BrainrotApp extends StatelessWidget {
             themeMode: appViewModel.themeMode,
             locale: appViewModel.locale,
             localizationsDelegates: const [
-              S.delegate,
+              AppLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
             ],
-            supportedLocales: S.delegate.supportedLocales,
+            supportedLocales: AppLocalizations.supportedLocales,
             routerConfig: AppRoutes.router,
           );
         },

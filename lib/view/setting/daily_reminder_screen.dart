@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
+import '../../l10n/app_localizations.dart';
 import '../noti/background_task.dart';
 import '../noti/notification_service.dart';
 import '../noti/usage_tracker.dart';
@@ -69,15 +70,15 @@ class _DailyReminderScreenState extends State<DailyReminderScreen>
   }
 
   Future<void> _toggleReminder(bool value) async {
+    final t = AppLocalizations.of(context);
     if (value) {
       // 1. Kiểm tra quyền thông báo Android 13+
       final granted =
           await NotificationService().requestNotificationPermission();
       if (!granted && mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content:
-                Text('Vui lòng cấp quyền thông báo để kích hoạt tính năng'),
+          SnackBar(
+            content: Text(t.notificationPermissionRequest),
             behavior: SnackBarBehavior.floating,
           ),
         );
@@ -113,11 +114,12 @@ class _DailyReminderScreenState extends State<DailyReminderScreen>
   }
 
   Future<void> _testNotificationNow() async {
+    final t = AppLocalizations.of(context);
     final granted = await NotificationService().requestNotificationPermission();
     if (!granted && mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Chưa có quyền hiển thị thông báo!'),
+        SnackBar(
+          content: Text(t.notificationPermissionDenied),
           behavior: SnackBarBehavior.floating,
         ),
       );
@@ -129,8 +131,8 @@ class _DailyReminderScreenState extends State<DailyReminderScreen>
 
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Đã gửi thông báo thử nghiệm thành công!'),
+        SnackBar(
+          content: Text(t.testNotificationSuccess),
           backgroundColor: DailyReminderScreen._accent,
           behavior: SnackBarBehavior.floating,
         ),
@@ -140,6 +142,7 @@ class _DailyReminderScreenState extends State<DailyReminderScreen>
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final background =
         isDark ? const Color(0xFF171513) : const Color(0xFFFFF8EF);
@@ -153,7 +156,7 @@ class _DailyReminderScreenState extends State<DailyReminderScreen>
       backgroundColor: background,
       appBar: AppBar(
         title: Text(
-          'Nhắc nhở lúc 21:00',
+          t.reminderScreenTitle,
           style: TextStyle(
             color: primaryText,
             fontSize: 20,
@@ -212,9 +215,9 @@ class _DailyReminderScreenState extends State<DailyReminderScreen>
                             ),
                           ),
                           const SizedBox(height: 12),
-                          const Text(
-                            'Thời gian dùng điện thoại hôm nay',
-                            style: TextStyle(
+                          Text(
+                            t.todayPhoneUsage,
+                            style: const TextStyle(
                               color: Colors.white70,
                               fontSize: 13,
                               fontWeight: FontWeight.w500,
@@ -224,7 +227,7 @@ class _DailyReminderScreenState extends State<DailyReminderScreen>
                           Text(
                             _hasUsagePermission
                                 ? UsageTracker.formatUsage(_todayUsage)
-                                : 'Chưa cấp quyền',
+                                : t.noPermission,
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 28,
@@ -260,7 +263,7 @@ class _DailyReminderScreenState extends State<DailyReminderScreen>
                             const SizedBox(width: 12),
                             Expanded(
                               child: Text(
-                                'Cần quyền truy cập sử dụng để app tự động đo thời gian.',
+                                t.permissionWarning,
                                 style: TextStyle(
                                   fontSize: 13,
                                   color: primaryText,
@@ -277,7 +280,7 @@ class _DailyReminderScreenState extends State<DailyReminderScreen>
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                               ),
-                              child: const Text('Cấp quyền'),
+                              child: Text(t.grantPermission),
                             ),
                           ],
                         ),
@@ -305,7 +308,7 @@ class _DailyReminderScreenState extends State<DailyReminderScreen>
                         activeColor: DailyReminderScreen._accent,
                         contentPadding: EdgeInsets.zero,
                         title: Text(
-                          'Nhắc nhở lúc 21:00 mỗi ngày',
+                          t.dailyReminderToggleTitle,
                           style: TextStyle(
                             fontWeight: FontWeight.w700,
                             fontSize: 15,
@@ -313,7 +316,7 @@ class _DailyReminderScreenState extends State<DailyReminderScreen>
                           ),
                         ),
                         subtitle: Text(
-                          'Tự động gửi thông báo tổng thời gian sử dụng điện thoại mỗi tối',
+                          t.dailyReminderToggleSubtitle,
                           style: TextStyle(
                             fontSize: 12,
                             color: secondaryText,
@@ -340,9 +343,9 @@ class _DailyReminderScreenState extends State<DailyReminderScreen>
                           Icons.notifications_active_rounded,
                           size: 20,
                         ),
-                        label: const Text(
-                          'Gửi thông báo thử ngay',
-                          style: TextStyle(
+                        label: Text(
+                          t.testNotificationButton,
+                          style: const TextStyle(
                             fontWeight: FontWeight.w700,
                             fontSize: 15,
                           ),
@@ -370,7 +373,7 @@ class _DailyReminderScreenState extends State<DailyReminderScreen>
                               ),
                               const SizedBox(width: 8),
                               Text(
-                                'Mẹo chạy ngầm ổn định',
+                                t.batteryTipTitle,
                                 style: TextStyle(
                                   fontWeight: FontWeight.w700,
                                   fontSize: 14,
@@ -381,7 +384,7 @@ class _DailyReminderScreenState extends State<DailyReminderScreen>
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            'Để tác vụ nền luôn kích hoạt đúng giờ lúc 21:00 trên các dòng máy Xiaomi, Samsung, Oppo: vui lòng tắt tính năng "Tối ưu hóa pin" cho ứng dụng Brainrot.',
+                            t.batteryTipBody,
                             style: TextStyle(
                               fontSize: 12,
                               color: secondaryText,
@@ -391,9 +394,9 @@ class _DailyReminderScreenState extends State<DailyReminderScreen>
                           const SizedBox(height: 10),
                           InkWell(
                             onTap: _requestIgnoreBatteryOptimization,
-                            child: const Text(
-                              'Cài đặt không tối ưu pin →',
-                              style: TextStyle(
+                            child: Text(
+                              t.batteryOptimizationLink,
+                              style: const TextStyle(
                                 color: DailyReminderScreen._accent,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 13,

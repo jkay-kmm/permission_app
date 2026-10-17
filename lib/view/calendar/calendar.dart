@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:usage_stats/usage_stats.dart';
+import '../../l10n/app_localizations.dart';
 import '../../model/app_usage_info.dart';
 import '../../service/app_icon_service.dart';
 import '../../service/daily_mood_service.dart';
@@ -198,13 +199,18 @@ class _CalendarScreenState extends State<CalendarScreen> {
       backgroundColor: background,
       appBar: AppBar(
         title: Center(
-          child: Text(
-            'Lịch & Báo cáo',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w800,
-              color: primaryText,
-            ),
+          child: Builder(
+            builder: (context) {
+              final t = AppLocalizations.of(context);
+              return Text(
+                t.calendarReportTitle,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w800,
+                  color: primaryText,
+                ),
+              );
+            },
           ),
         ),
         backgroundColor: Colors.transparent,
@@ -553,22 +559,27 @@ class _CalendarScreenState extends State<CalendarScreen> {
                   //   ),
                   // ),
                   // const SizedBox(width: 10),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Thống kê thời gian sử dụng',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w800,
-                          color: primaryText,
-                        ),
-                      ),
-                      Text(
-                        _formatDayTitle(_selectedDay),
-                        style: TextStyle(fontSize: 12, color: secondaryText),
-                      ),
-                    ],
+                  Builder(
+                    builder: (context) {
+                      final t = AppLocalizations.of(context);
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            t.usageStats,
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w800,
+                              color: primaryText,
+                            ),
+                          ),
+                          Text(
+                            _formatDayTitle(_selectedDay, t),
+                            style: TextStyle(fontSize: 12, color: secondaryText),
+                          ),
+                        ],
+                      );
+                    },
                   ),
                 ],
               ),
@@ -637,13 +648,18 @@ class _CalendarScreenState extends State<CalendarScreen> {
                             letterSpacing: -0.5,
                           ),
                         ),
-                        Text(
-                          'Tổng thời gian',
-                          style: TextStyle(
-                            fontSize: 11,
-                            color: secondaryText,
-                            fontWeight: FontWeight.w500,
-                          ),
+                        Builder(
+                          builder: (context) {
+                            final t = AppLocalizations.of(context);
+                            return Text(
+                              t.totalTime,
+                              style: TextStyle(
+                                fontSize: 11,
+                                color: secondaryText,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            );
+                          },
                         ),
                       ],
                     ),
@@ -658,21 +674,31 @@ class _CalendarScreenState extends State<CalendarScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 child: Center(
-                  child: Text(
-                    'Không có dữ liệu sử dụng cho ngày này.',
-                    style: TextStyle(color: secondaryText, fontSize: 13),
+                  child: Builder(
+                    builder: (context) {
+                      final t = AppLocalizations.of(context);
+                      return Text(
+                        t.noUsageData,
+                        style: TextStyle(color: secondaryText, fontSize: 13),
+                      );
+                    },
                   ),
                 ),
               )
             else ...[
-              Text(
-                'Ứng dụng dùng nhiều nhất',
-                style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.bold,
-                  color: secondaryText,
-                  letterSpacing: 0.3,
-                ),
+              Builder(
+                builder: (context) {
+                  final t = AppLocalizations.of(context);
+                  return Text(
+                    t.topAppsTitle,
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.bold,
+                      color: secondaryText,
+                      letterSpacing: 0.3,
+                    ),
+                  );
+                },
               ),
               const SizedBox(height: 12),
               ...List.generate(topApps.length, (index) {
@@ -779,12 +805,12 @@ class _CalendarScreenState extends State<CalendarScreen> {
     }
   }
 
-  String _formatDayTitle(DateTime date) {
+  String _formatDayTitle(DateTime date, AppLocalizations t) {
     final now = DateTime.now();
     if (date.year == now.year &&
         date.month == now.month &&
         date.day == now.day) {
-      return 'Hôm nay, ngày ${date.day}/${date.month}';
+      return t.todayLabel(date.day, date.month);
     }
     const days = ['CN', 'Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7'];
     final dayOfWeek = days[date.weekday % 7];
@@ -801,20 +827,18 @@ class _CalendarScreenState extends State<CalendarScreen> {
   }
 
   String _getMonthYear(DateTime date) {
-    const months = [
-      'Tháng 1',
-      'Tháng 2',
-      'Tháng 3',
-      'Tháng 4',
-      'Tháng 5',
-      'Tháng 6',
-      'Tháng 7',
-      'Tháng 8',
-      'Tháng 9',
-      'Tháng 10',
-      'Tháng 11',
-      'Tháng 12',
-    ];
+    final lang = Localizations.localeOf(context).languageCode;
+    final months = lang == 'vi'
+        ? [
+            'Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4',
+            'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8',
+            'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12',
+          ]
+        : [
+            'January', 'February', 'March', 'April',
+            'May', 'June', 'July', 'August',
+            'September', 'October', 'November', 'December',
+          ];
     return '${months[date.month - 1]} ${date.year}';
   }
 }

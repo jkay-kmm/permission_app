@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import '../../view_model/home_view_model.dart';
-import '../../l10n/l10n.dart';
+import '../../l10n/app_localizations.dart';
 import '../../model/app_usage_info.dart';
 import '../../widget/calendar_dialog.dart';
 
@@ -45,12 +45,10 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    final t = S.of(context);
-
     return Consumer<HomeViewModel>(
       builder: (context, homeViewModel, _) {
         return Scaffold(
-          backgroundColor: Color(0xFFFDF5E6),
+          backgroundColor: const Color(0xFFFDF5E6),
           body: _HomeBody(homeViewModel: homeViewModel),
         );
       },
@@ -97,19 +95,20 @@ class _HomeBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     return Consumer<HomeViewModel>(
       builder: (context, vm, child) {
         if (vm.isLoading) {
-          return const Center(
+          return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SpinKitFadingCircle(
+                const SpinKitFadingCircle(
                   color: Colors.orange,
                   size: 48,
                 ),
-                SizedBox(height: 16),
-                Text('Loading app usage data...'),
+                const SizedBox(height: 16),
+                Text(t.loadingUsage),
               ],
             ),
           );
@@ -130,7 +129,7 @@ class _HomeBody extends StatelessWidget {
                 const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () => vm.refresh(),
-                  child: const Text('Retry'),
+                  child: Text(t.retry),
                 ),
               ],
             ),
@@ -142,13 +141,13 @@ class _HomeBody extends StatelessWidget {
       child: RefreshIndicator(
         onRefresh: () => homeViewModel.refresh(),
         child: SingleChildScrollView(
-          // physics: const AlwaysScrollableScrollPhysics(),
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Consumer<HomeViewModel>(
-                builder: (context, vm, _) => _buildWelcomeSection(context, vm),
+                builder: (context, vm, _) =>
+                    _buildWelcomeSection(context, vm),
               ),
               const Divider(
                 thickness: 1,
@@ -157,7 +156,8 @@ class _HomeBody extends StatelessWidget {
                 endIndent: 16,
               ),
               Consumer<HomeViewModel>(
-                builder: (context, vm, _) => _buildUsageOverview(context, vm),
+                builder: (context, vm, _) =>
+                    _buildUsageOverview(context, vm),
               ),
               const Divider(
                 thickness: 1,
@@ -166,7 +166,8 @@ class _HomeBody extends StatelessWidget {
                 endIndent: 16,
               ),
               Consumer<HomeViewModel>(
-                builder: (context, vm, _) => _buildTopAppsSection(context, vm),
+                builder: (context, vm, _) =>
+                    _buildTopAppsSection(context, vm),
               ),
               const SizedBox(height: 24),
             ],
@@ -185,6 +186,7 @@ Widget _buildBrainHealthCalculation(
   BuildContext context,
   HomeViewModel homeViewModel,
 ) {
+  final t = AppLocalizations.of(context);
   final finalScore = homeViewModel.currentScore;
   final totalMinutes = homeViewModel.totalUsage.inMinutes;
   final goalMinutes = 120;
@@ -253,7 +255,7 @@ Widget _buildBrainHealthCalculation(
         child: LayoutBuilder(
           builder: (context, constraints) {
             final percent = (finalScore.clamp(0, 100)) / 100;
-            final barHeight = 4.0;
+            const barHeight = 4.0;
             final fillWidth = constraints.maxWidth * percent;
             return Container(
               width: double.infinity,
@@ -286,14 +288,14 @@ Widget _buildBrainHealthCalculation(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            'Một ngày tuyệt vời với 100 điểm năng lượng.',
+            t.homeScoreSubtitle,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   color: Colors.grey[600],
                   fontStyle: FontStyle.italic,
                 ),
             textAlign: TextAlign.center,
           ),
-          SizedBox(width: 8),
+          const SizedBox(width: 8),
           GestureDetector(
             onTap: () => _showHealthCalculationDetails(
               context,
@@ -365,15 +367,6 @@ void _showHealthCalculationDetails(
                   Container(
                     width: 60,
                     height: 60,
-                    // decoration: BoxDecoration(
-                    //   borderRadius: BorderRadius.circular(30),
-                    //   boxShadow: [
-                    //     BoxShadow(
-                    //       color: _getScoreColor(finalScore),
-                    //       blurRadius: 10,
-                    //     ),
-                    //   ],
-                    // ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(30),
                       child: Image.asset(
@@ -418,7 +411,10 @@ void _showHealthCalculationDetails(
                         Center(
                           child: Text(
                             'Cách tính điểm năng lượng não bộ',
-                            style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge
+                                ?.copyWith(fontWeight: FontWeight.bold),
                           ),
                         ),
                       ],
@@ -464,7 +460,8 @@ void _showHealthCalculationDetails(
                                   fit: BoxFit.cover,
                                   errorBuilder: (context, error, stackTrace) {
                                     return ClipRRect(
-                                      borderRadius: BorderRadius.circular(40),
+                                      borderRadius:
+                                          BorderRadius.circular(40),
                                       child: Image.asset(
                                         'assets/image/vui.png',
                                         width: 80,
@@ -480,7 +477,8 @@ void _showHealthCalculationDetails(
                                             height: 80,
                                             decoration: BoxDecoration(
                                               color: Colors.orange[200],
-                                              borderRadius: BorderRadius.circular(40),
+                                              borderRadius:
+                                                  BorderRadius.circular(40),
                                             ),
                                             child: const Icon(
                                               Icons.psychology,
@@ -497,7 +495,10 @@ void _showHealthCalculationDetails(
                             ),
                             Text(
                               'Current Score',
-                              style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.copyWith(fontWeight: FontWeight.bold),
                             ),
                             const SizedBox(height: 8),
                             Text(
@@ -539,7 +540,8 @@ void _showHealthCalculationDetails(
                         _buildCalculationRow(
                           'usage after goal',
                           '${((totalMinutes - goalMinutes) / 60).toStringAsFixed(1)} hrs * 20.0/hr',
-                          impact: '-${postGoalImpact.toStringAsFixed(1)} points',
+                          impact:
+                              '-${postGoalImpact.toStringAsFixed(1)} points',
                           impactColor: Colors.red,
                         ),
                       ],
@@ -601,7 +603,7 @@ Color _getScoreColor(double score) {
 }
 
 Widget _buildUsageOverview(BuildContext context, HomeViewModel homeViewModel) {
-  final t = S.of(context);
+  final t = AppLocalizations.of(context);
 
   return Center(
     child: Column(
@@ -614,7 +616,7 @@ Widget _buildUsageOverview(BuildContext context, HomeViewModel homeViewModel) {
             Column(
               children: [
                 Text(
-                  "Total Screen Time",
+                  t.totalScreenTime,
                   style: Theme.of(
                     context,
                   ).textTheme.bodySmall?.copyWith(color: Colors.grey[600]),
@@ -632,7 +634,7 @@ Widget _buildUsageOverview(BuildContext context, HomeViewModel homeViewModel) {
             const SizedBox(width: 100),
             _buildStatItem(
               context,
-              "Apps",
+              t.appsLabel,
               '${homeViewModel.appUsageList.length}',
               Icons.apps,
             ),
@@ -668,7 +670,9 @@ Widget _buildStatItem(
   );
 }
 
-Widget _buildTopAppsSection(BuildContext context, HomeViewModel homeViewModel) {
+Widget _buildTopAppsSection(
+    BuildContext context, HomeViewModel homeViewModel) {
+  final t = AppLocalizations.of(context);
   if (homeViewModel.topApps.isEmpty) return const SizedBox.shrink();
 
   return Padding(
@@ -677,7 +681,7 @@ Widget _buildTopAppsSection(BuildContext context, HomeViewModel homeViewModel) {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Applications',
+          t.applicationsLabel,
           style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.bold,
                 fontSize: 14,

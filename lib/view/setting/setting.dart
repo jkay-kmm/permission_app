@@ -1,6 +1,7 @@
 import 'package:brainrot/view_model/app_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../l10n/app_localizations.dart';
 import 'daily_reminder_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -11,6 +12,7 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     final appSettings = context.watch<AppViewModel>();
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final background =
@@ -36,7 +38,7 @@ class SettingsScreen extends StatelessWidget {
                   _PageHeader(
                       primaryText: primaryText, secondaryText: secondaryText),
                   const SizedBox(height: 28),
-                  _SectionLabel('TÙY CHỈNH', color: secondaryText),
+                  _SectionLabel(t.sectionCustomize, color: secondaryText),
                   const SizedBox(height: 10),
                   _SettingsGroup(
                     color: cardColor,
@@ -46,30 +48,30 @@ class SettingsScreen extends StatelessWidget {
                         icon: Icons.language_rounded,
                         iconColor: const Color(0xFF5D77E5),
                         iconBackground: const Color(0xFFEFF2FF),
-                        title: 'Ngôn ngữ',
-                        subtitle: 'Ngôn ngữ hiển thị trong ứng dụng',
+                        title: t.languageTitle,
+                        subtitle: t.languageSubtitle,
                         textColor: primaryText,
                         secondaryTextColor: secondaryText,
                         value: appSettings.locale.languageCode == 'vi'
-                            ? 'Tiếng Việt'
-                            : 'English',
+                            ? t.languageVietnamese
+                            : t.languageEnglish,
                         onTap: () => _showLanguagePicker(context, appSettings),
                       ),
                       _SettingsTile(
                         icon: Icons.palette_outlined,
                         iconColor: const Color(0xFF8B5CC7),
                         iconBackground: const Color(0xFFF4ECFF),
-                        title: 'Giao diện',
-                        subtitle: 'Chọn chế độ sáng hoặc tối',
+                        title: t.themeTitle,
+                        subtitle: t.themeSubtitle,
                         textColor: primaryText,
                         secondaryTextColor: secondaryText,
-                        value: _themeLabel(appSettings.themeMode),
+                        value: _themeLabel(t, appSettings.themeMode),
                         onTap: () => _showThemePicker(context, appSettings),
                       ),
                     ],
                   ),
                   const SizedBox(height: 26),
-                  _SectionLabel('SỨC KHỎE SỐ', color: secondaryText),
+                  _SectionLabel(t.sectionDigitalHealth, color: secondaryText),
                   const SizedBox(height: 10),
                   _SettingsGroup(
                     color: cardColor,
@@ -79,9 +81,8 @@ class SettingsScreen extends StatelessWidget {
                         icon: Icons.notifications_active_outlined,
                         iconColor: const Color(0xFFF27A3D),
                         iconBackground: const Color(0xFFFFF0E5),
-                        title: 'Nhắc nhở lúc 21:00',
-                        subtitle:
-                            'Thông báo tổng thời gian dùng điện thoại mỗi tối',
+                        title: t.reminderTitle,
+                        subtitle: t.reminderSubtitle,
                         textColor: primaryText,
                         secondaryTextColor: secondaryText,
                         onTap: () => Navigator.of(context).push(
@@ -94,14 +95,14 @@ class SettingsScreen extends StatelessWidget {
                         icon: Icons.visibility_outlined,
                         iconColor: const Color(0xFF2B9A73),
                         iconBackground: const Color(0xFFE7F7F1),
-                        title: 'Quan sát xung quanh',
-                        subtitle: 'Nhắc bạn rời mắt khỏi màn hình',
+                        title: t.surroundingWatchTitle,
+                        subtitle: t.surroundingWatchSubtitle,
                         textColor: primaryText,
                         secondaryTextColor: secondaryText,
-                        badge: 'Sắp có',
+                        badge: t.comingSoon,
                         onTap: () => _showComingSoon(
                           context,
-                          title: 'Quan sát xung quanh',
+                          title: t.surroundingWatchTitle,
                           icon: Icons.visibility_outlined,
                         ),
                       ),
@@ -109,21 +110,21 @@ class SettingsScreen extends StatelessWidget {
                         icon: Icons.bedtime_outlined,
                         iconColor: const Color(0xFF4969B2),
                         iconBackground: const Color(0xFFEAF0FF),
-                        title: 'Chế độ đi ngủ',
-                        subtitle: 'Tạo khoảng nghỉ trước giờ ngủ',
+                        title: t.sleepModeTitle,
+                        subtitle: t.sleepModeSubtitle,
                         textColor: primaryText,
                         secondaryTextColor: secondaryText,
-                        badge: 'Sắp có',
+                        badge: t.comingSoon,
                         onTap: () => _showComingSoon(
                           context,
-                          title: 'Chế độ đi ngủ',
+                          title: t.sleepModeTitle,
                           icon: Icons.bedtime_outlined,
                         ),
                       ),
                     ],
                   ),
                   const SizedBox(height: 26),
-                  _SectionLabel('HỖ TRỢ', color: secondaryText),
+                  _SectionLabel(t.sectionSupport, color: secondaryText),
                   const SizedBox(height: 10),
                   _SettingsGroup(
                     color: cardColor,
@@ -133,13 +134,13 @@ class SettingsScreen extends StatelessWidget {
                         icon: Icons.mail_outline_rounded,
                         iconColor: const Color(0xFFE07B39),
                         iconBackground: const Color(0xFFFFF0E5),
-                        title: 'Liên hệ với chúng tôi',
-                        subtitle: 'Góp ý hoặc báo cáo sự cố',
+                        title: t.contactUsTitle,
+                        subtitle: t.contactUsSubtitle,
                         textColor: primaryText,
                         secondaryTextColor: secondaryText,
                         onTap: () => _showComingSoon(
                           context,
-                          title: 'Liên hệ với chúng tôi',
+                          title: t.contactUsTitle,
                           icon: Icons.mail_outline_rounded,
                         ),
                       ),
@@ -147,13 +148,13 @@ class SettingsScreen extends StatelessWidget {
                         icon: Icons.shield_outlined,
                         iconColor: const Color(0xFF63747B),
                         iconBackground: const Color(0xFFEDF2F3),
-                        title: 'Chính sách quyền riêng tư',
-                        subtitle: 'Cách Brainrot bảo vệ dữ liệu của bạn',
+                        title: t.privacyPolicyTitle,
+                        subtitle: t.privacyPolicySubtitle,
                         textColor: primaryText,
                         secondaryTextColor: secondaryText,
                         onTap: () => _showComingSoon(
                           context,
-                          title: 'Chính sách quyền riêng tư',
+                          title: t.privacyPolicyTitle,
                           icon: Icons.shield_outlined,
                         ),
                       ),
@@ -174,7 +175,7 @@ class SettingsScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 3),
                         Text(
-                          'Phiên bản 1.0.0',
+                          t.version,
                           style: TextStyle(color: secondaryText, fontSize: 12),
                         ),
                       ],
@@ -189,28 +190,35 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
-  static String _themeLabel(ThemeMode mode) => switch (mode) {
-        ThemeMode.light => 'Sáng',
-        ThemeMode.dark => 'Tối',
-        ThemeMode.system => 'Theo hệ thống',
+  static String _themeLabel(AppLocalizations t, ThemeMode mode) =>
+      switch (mode) {
+        ThemeMode.light => t.themeLight,
+        ThemeMode.dark => t.themeDark,
+        ThemeMode.system => t.themeSystem,
       };
 
   Future<void> _showLanguagePicker(
     BuildContext context,
     AppViewModel appSettings,
   ) async {
+    final t = AppLocalizations.of(context);
     final selectedLocale = await showModalBottomSheet<Locale>(
       context: context,
       showDragHandle: true,
       useSafeArea: true,
       builder: (_) => _PickerSheet<Locale>(
-        title: 'Ngôn ngữ',
-        subtitle: 'Chọn ngôn ngữ bạn muốn sử dụng',
+        title: t.languagePickerTitle,
+        subtitle: t.languagePickerSubtitle,
         currentValue: appSettings.locale,
-        options: const [
+        options: [
           _PickerOption(
-              value: Locale('vi'), title: 'Tiếng Việt', leading: 'VI'),
-          _PickerOption(value: Locale('en'), title: 'English', leading: 'EN'),
+              value: const Locale('vi'),
+              title: t.languageVietnamese,
+              leading: 'VI'),
+          _PickerOption(
+              value: const Locale('en'),
+              title: t.languageEnglish,
+              leading: 'EN'),
         ],
       ),
     );
@@ -221,28 +229,29 @@ class SettingsScreen extends StatelessWidget {
     BuildContext context,
     AppViewModel appSettings,
   ) async {
+    final t = AppLocalizations.of(context);
     final selectedTheme = await showModalBottomSheet<ThemeMode>(
       context: context,
       showDragHandle: true,
       useSafeArea: true,
       builder: (_) => _PickerSheet<ThemeMode>(
-        title: 'Giao diện',
-        subtitle: 'Chọn giao diện phù hợp với bạn',
+        title: t.themePickerTitle,
+        subtitle: t.themePickerSubtitle,
         currentValue: appSettings.themeMode,
-        options: const [
+        options: [
           _PickerOption(
             value: ThemeMode.system,
-            title: 'Theo hệ thống',
+            title: t.themeSystem,
             leadingIcon: Icons.brightness_auto_outlined,
           ),
           _PickerOption(
             value: ThemeMode.light,
-            title: 'Sáng',
+            title: t.themeLight,
             leadingIcon: Icons.light_mode_outlined,
           ),
           _PickerOption(
             value: ThemeMode.dark,
-            title: 'Tối',
+            title: t.themeDark,
             leadingIcon: Icons.dark_mode_outlined,
           ),
         ],
@@ -256,6 +265,7 @@ class SettingsScreen extends StatelessWidget {
     required String title,
     required IconData icon,
   }) {
+    final t = AppLocalizations.of(context);
     showModalBottomSheet<void>(
       context: context,
       showDragHandle: true,
@@ -284,7 +294,7 @@ class SettingsScreen extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              'Tính năng này đang được hoàn thiện và sẽ sớm có mặt trong bản cập nhật tiếp theo.',
+              t.comingSoonMessage,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: Theme.of(context).colorScheme.onSurfaceVariant,
@@ -304,7 +314,7 @@ class SettingsScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(14),
                   ),
                 ),
-                child: const Text('Đã hiểu'),
+                child: Text(t.understood),
               ),
             ),
           ],
@@ -322,12 +332,13 @@ class _PageHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Center(
           child: Text(
-            'Cài đặt',
+            t.settingsTitle,
             style: TextStyle(
               color: primaryText,
               fontSize: 18,
@@ -337,11 +348,6 @@ class _PageHeader extends StatelessWidget {
             ),
           ),
         ),
-        // const SizedBox(height: 7),
-        // Text(
-        //   'Cá nhân hóa trải nghiệm của bạn',
-        //   style: TextStyle(color: secondaryText, fontSize: 15),
-        // ),
       ],
     );
   }
@@ -469,7 +475,8 @@ class _SettingsTile extends StatelessWidget {
                       subtitle,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(color: secondaryTextColor, fontSize: 12),
+                      style:
+                          TextStyle(color: secondaryTextColor, fontSize: 12),
                     ),
                   ],
                 ),

@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../l10n/l10n.dart';
+import '../../l10n/app_localizations.dart';
 import '../../model/blocking_rule.dart';
 import '../../service/app_icon_service.dart';
 import '../../service/permission_service.dart';
@@ -56,13 +56,14 @@ class _BlockingScreenState extends State<BlockingScreen>
   }
 
   Future<void> _showAppPicker(BlockingViewModel blockingVM) async {
+    final t = AppLocalizations.of(context);
     final apps = await _permissionService.getLaunchableApps();
     if (!mounted) return;
 
     if (apps.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Không tìm thấy ứng dụng khả dụng để chặn.'),
+        SnackBar(
+          content: Text(t.noAvailableApps),
           behavior: SnackBarBehavior.floating,
         ),
       );
@@ -86,12 +87,13 @@ class _BlockingScreenState extends State<BlockingScreen>
     BlockingViewModel blockingVM,
     Map<String, String> app,
   ) async {
+    final t = AppLocalizations.of(context);
     final packageName = app['packageName']!;
     final appName = app['appName']!;
     final rule = BlockingRule(
       id: 'app_${packageName}_${DateTime.now().millisecondsSinceEpoch}',
-      name: 'Chặn $appName',
-      description: 'Chặn cả ngày khi mở ứng dụng',
+      name: 'Block $appName',
+      description: 'Block all day when app is opened',
       type: BlockingType.allDayBlock,
       targetPackages: [packageName],
       createdAt: DateTime.now(),
@@ -101,7 +103,7 @@ class _BlockingScreenState extends State<BlockingScreen>
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('Đã thêm quy tắc chặn cho $appName'),
+        content: Text(t.addedBlockRule(appName)),
         behavior: SnackBarBehavior.floating,
         backgroundColor: BlockingScreen._accent,
       ),
@@ -110,6 +112,7 @@ class _BlockingScreenState extends State<BlockingScreen>
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final background =
         isDark ? const Color(0xFF171513) : const Color(0xFFFFF8EF);
@@ -137,9 +140,9 @@ class _BlockingScreenState extends State<BlockingScreen>
               borderRadius: BorderRadius.circular(16),
             ),
             icon: const Icon(Icons.add_rounded),
-            label: const Text(
-              'Chặn ứng dụng',
-              style: TextStyle(fontWeight: FontWeight.w700),
+            label: Text(
+              t.blockAppFab,
+              style: const TextStyle(fontWeight: FontWeight.w700),
             ),
           ),
           body: SafeArea(
@@ -157,12 +160,6 @@ class _BlockingScreenState extends State<BlockingScreen>
                         secondaryText: secondaryText,
                       ),
                       const SizedBox(height: 20),
-
-                      // // Hero Card
-                      // _BlockingHeroCard(
-                      //   activeRulesCount: blockingVM.activeRulesCount,
-                      //   timeUntilReset: blockingVM.formattedTimeUntilReset,
-                      // ),
                       const SizedBox(height: 20),
 
                       // Permission Warning Banner if not granted
@@ -176,7 +173,7 @@ class _BlockingScreenState extends State<BlockingScreen>
 
                       // Section Label
                       _SectionLabel(
-                        'DANH SÁCH QUY TẮC (${rules.length})',
+                        t.rulesListLabel(rules.length),
                         color: secondaryText,
                       ),
                       const SizedBox(height: 10),
@@ -291,16 +288,17 @@ class _BlockingScreenState extends State<BlockingScreen>
     BlockingViewModel blockingVM,
     BlockingRule rule,
   ) async {
+    final t = AppLocalizations.of(context);
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogCtx) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: const Text('Xóa quy tắc chặn'),
-        content: Text('Bạn có chắc muốn xóa "${rule.name}" không?'),
+        title: Text(t.confirmDeleteTitle),
+        content: Text(t.confirmDeleteMessage(rule.name)),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(dialogCtx).pop(false),
-            child: const Text('Hủy'),
+            child: Text(t.cancel),
           ),
           FilledButton(
             onPressed: () => Navigator.of(dialogCtx).pop(true),
@@ -310,7 +308,7 @@ class _BlockingScreenState extends State<BlockingScreen>
                 borderRadius: BorderRadius.circular(12),
               ),
             ),
-            child: const Text('Xóa'),
+            child: Text(t.delete),
           ),
         ],
       ),
@@ -322,34 +320,35 @@ class _BlockingScreenState extends State<BlockingScreen>
   }
 
   _RuleTypeMeta _getRuleTypeMeta(BlockingType type) {
+    final t = AppLocalizations.of(context);
     switch (type) {
       case BlockingType.allDayBlock:
-        return const _RuleTypeMeta(
-          title: 'Chặn cả ngày',
+        return _RuleTypeMeta(
+          title: t.blockTypeAllDay,
           icon: Icons.block_flipped,
-          iconColor: Color(0xFF8B5CC7),
-          background: Color(0xFFF4ECFF),
+          iconColor: const Color(0xFF8B5CC7),
+          background: const Color(0xFFF4ECFF),
         );
       case BlockingType.timeLimit:
-        return const _RuleTypeMeta(
-          title: 'Giới hạn thời gian',
+        return _RuleTypeMeta(
+          title: t.blockTypeTimeLimit,
           icon: Icons.timer_outlined,
-          iconColor: Color(0xFFE07B39),
-          background: Color(0xFFFFF0E5),
+          iconColor: const Color(0xFFE07B39),
+          background: const Color(0xFFFFF0E5),
         );
       case BlockingType.schedule:
-        return const _RuleTypeMeta(
-          title: 'Theo lịch trình',
+        return _RuleTypeMeta(
+          title: t.blockTypeSchedule,
           icon: Icons.schedule_rounded,
-          iconColor: Color(0xFF5D77E5),
-          background: Color(0xFFEFF2FF),
+          iconColor: const Color(0xFF5D77E5),
+          background: const Color(0xFFEFF2FF),
         );
       case BlockingType.focusMode:
-        return const _RuleTypeMeta(
-          title: 'Chế độ tập trung',
+        return _RuleTypeMeta(
+          title: t.blockTypeFocusMode,
           icon: Icons.filter_center_focus_rounded,
-          iconColor: Color(0xFF2B9A73),
-          background: Color(0xFFE7F7F1),
+          iconColor: const Color(0xFF2B9A73),
+          background: const Color(0xFFE7F7F1),
         );
     }
   }
@@ -377,12 +376,13 @@ class _PageHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Center(
           child: Text(
-            'Quy tắc chặn',
+            t.blockingRulesTitle,
             style: TextStyle(
               color: primaryText,
               fontSize: 18,
@@ -397,143 +397,6 @@ class _PageHeader extends StatelessWidget {
   }
 }
 
-// class _BlockingHeroCard extends StatelessWidget {
-//   const _BlockingHeroCard({
-//     required this.activeRulesCount,
-//     required this.timeUntilReset,
-//   });
-
-//   final int activeRulesCount;
-//   final String timeUntilReset;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       padding: const EdgeInsets.all(20),
-//       height: 200, // Fixed height to give Stack a finite size
-//       decoration: BoxDecoration(
-//         gradient: const LinearGradient(
-//           begin: Alignment.topLeft,
-//           end: Alignment.bottomRight,
-//           colors: [Color(0xFFF58A4E), Color(0xFFEF6941)],
-//         ),
-//         borderRadius: BorderRadius.circular(24),
-//         boxShadow: [
-//           BoxShadow(
-//             color: const Color(0xFFF27A3D).withOpacity(.24),
-//             blurRadius: 24,
-//             offset: const Offset(0, 10),
-//           ),
-//         ],
-//       ),
-//       child: Stack(
-//         children: [
-//           const Positioned(
-//             right: -16,
-//             top: -20,
-//             child: Icon(
-//               Icons.shield_outlined,
-//               size: 112,
-//               color: Color(0x24FFFFFF),
-//             ),
-//           ),
-//           // Column(
-//           //   crossAxisAlignment: CrossAxisAlignment.start,
-//           //   children: [
-//           //     // Row(
-//           //     //   children: [
-//           //     //     Container(
-//           //     //       width: 48,
-//           //     //       height: 48,
-//           //     //       decoration: BoxDecoration(
-//           //     //         color: Colors.white.withOpacity(.18),
-//           //     //         borderRadius: BorderRadius.circular(16),
-//           //     //         border: Border.all(color: Colors.white.withOpacity(.22)),
-//           //     //       ),
-//           //     //       child: const Icon(
-//           //     //         Icons.do_not_disturb_on_rounded,
-//           //     //         color: Colors.white,
-//           //     //         size: 26,
-//           //     //       ),
-//           //     //     ),
-//           //     //     const SizedBox(width: 14),
-//           //     //     const Expanded(
-//           //     //       child: Column(
-//           //     //         crossAxisAlignment: CrossAxisAlignment.start,
-//           //     //         children: [
-//           //     //           Text(
-//           //     //             'Trạng thái bảo vệ',
-//           //     //             style: TextStyle(
-//           //     //               color: Colors.white,
-//           //     //               fontSize: 17,
-//           //     //               fontWeight: FontWeight.w800,
-//           //     //             ),
-//           //     //           ),
-//           //     //           SizedBox(height: 3),
-//           //     //           Text(
-//           //     //             'Ngăn chặn mở app gây nghiện tự động',
-//           //     //             style: TextStyle(
-//           //     //               color: Color(0xE6FFFFFF),
-//           //     //               fontSize: 13,
-//           //     //             ),
-//           //     //           ),
-//           //     //         ],
-//           //     //       ),
-//           //     //     ),
-//           //     //   ],
-//           //     // ),
-//           //     const SizedBox(height: 18),
-//           //     Container(
-//           //       padding:
-//           //           const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-//           //       decoration: BoxDecoration(
-//           //         color: Colors.black.withOpacity(.12),
-//           //         borderRadius: BorderRadius.circular(14),
-//           //       ),
-//           //       child: Row(
-//           //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//           //         children: [
-//           //           Row(
-//           //             children: [
-//           //               const Icon(Icons.check_circle_outline,
-//           //                   size: 16, color: Colors.white70),
-//           //               const SizedBox(width: 6),
-//           //               Text(
-//           //                 '$activeRulesCount quy tắc đang bật',
-//           //                 style: const TextStyle(
-//           //                   color: Colors.white,
-//           //                   fontSize: 13,
-//           //                   fontWeight: FontWeight.w600,
-//           //                 ),
-//           //               ),
-//           //             ],
-//           //           ),
-//           //           Row(
-//           //             children: [
-//           //               const Icon(Icons.update_rounded,
-//           //                   size: 16, color: Colors.white70),
-//           //               const SizedBox(width: 6),
-//           //               Text(
-//           //                 'Reset sau $timeUntilReset',
-//           //                 style: const TextStyle(
-//           //                   color: Colors.white,
-//           //                   fontSize: 13,
-//           //                   fontWeight: FontWeight.w600,
-//           //                 ),
-//           //               ),
-//           //             ],
-//           //           ),
-//           //         ],
-//           //       ),
-//           //     ),
-//           //   ],
-//           // ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
 class _PermissionBanner extends StatelessWidget {
   const _PermissionBanner({
     required this.onEnable,
@@ -545,6 +408,7 @@ class _PermissionBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     final bgColor = isDark ? const Color(0xFF33261A) : const Color(0xFFFFF3E0);
     const accentColor = Color(0xFFF27A3D);
 
@@ -572,21 +436,21 @@ class _PermissionBanner extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 14),
-          const Expanded(
+          Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Cần cấp quyền Trợ năng',
-                  style: TextStyle(
+                  t.permissionBannerTitle,
+                  style: const TextStyle(
                     fontWeight: FontWeight.w700,
                     fontSize: 14,
                   ),
                 ),
-                SizedBox(height: 3),
+                const SizedBox(height: 3),
                 Text(
-                  'Bật Trợ năng để Brainrot tự động phát hiện và khóa app.',
-                  style: TextStyle(
+                  t.permissionBannerSubtitle,
+                  style: const TextStyle(
                     fontSize: 12,
                     color: Colors.grey,
                     height: 1.3,
@@ -607,7 +471,8 @@ class _PermissionBanner extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
-            child: const Text('Bật ngay', style: TextStyle(fontSize: 13)),
+            child: Text(t.permissionBannerButton,
+                style: const TextStyle(fontSize: 13)),
           ),
         ],
       ),
@@ -697,6 +562,7 @@ class _RuleTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     final firstPackage =
         rule.targetPackages.isNotEmpty ? rule.targetPackages.first : null;
 
@@ -757,7 +623,7 @@ class _RuleTile extends StatelessWidget {
                       borderRadius: BorderRadius.circular(6),
                     ),
                     child: Text(
-                      '${rule.targetPackages.length} ứng dụng áp dụng',
+                      t.appsApplied(rule.targetPackages.length),
                       style: TextStyle(
                         fontSize: 11,
                         color: meta.iconColor,
@@ -779,7 +645,7 @@ class _RuleTile extends StatelessWidget {
               color: secondaryText.withOpacity(.6),
             ),
             onPressed: onDelete,
-            tooltip: 'Xóa quy tắc',
+            tooltip: t.deleteTooltip,
           ),
 
           // Switch
@@ -852,6 +718,7 @@ class _EmptyRulesCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
       decoration: BoxDecoration(
@@ -875,7 +742,7 @@ class _EmptyRulesCard extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            'Chưa có quy tắc chặn nào',
+            t.emptyRulesTitle,
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w800,
@@ -884,7 +751,7 @@ class _EmptyRulesCard extends StatelessWidget {
           ),
           const SizedBox(height: 6),
           Text(
-            'Hãy chọn các ứng dụng hay làm bạn xao nhãng để cài đặt giới hạn và bảo vệ sự tập trung.',
+            t.emptyRulesSubtitle,
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 13,
@@ -901,10 +768,11 @@ class _EmptyRulesCard extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(14),
               ),
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
             ),
             icon: const Icon(Icons.add_rounded, size: 18),
-            label: const Text('Thêm ứng dụng đầu tiên'),
+            label: Text(t.addFirstApp),
           ),
         ],
       ),
@@ -955,6 +823,7 @@ class _AppPickerBottomSheetState extends State<_AppPickerBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final t = AppLocalizations.of(context);
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final cardColor = isDark ? const Color(0xFF24211E) : Colors.white;
     final primaryText = isDark ? const Color(0xFFF8F4EF) : BlockingScreen._ink;
@@ -980,7 +849,7 @@ class _AppPickerBottomSheetState extends State<_AppPickerBottomSheet> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Chọn ứng dụng cần chặn',
+                      t.appPickerTitle,
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w800,
@@ -989,7 +858,7 @@ class _AppPickerBottomSheetState extends State<_AppPickerBottomSheet> {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'Chọn ứng dụng để áp dụng chặn toàn thời gian',
+                      t.appPickerSubtitle,
                       style: TextStyle(
                         fontSize: 13,
                         color: secondaryText,
@@ -1000,7 +869,7 @@ class _AppPickerBottomSheetState extends State<_AppPickerBottomSheet> {
                     TextField(
                       controller: _searchController,
                       decoration: InputDecoration(
-                        hintText: 'Tìm kiếm ứng dụng...',
+                        hintText: t.searchAppsHint,
                         hintStyle:
                             TextStyle(color: secondaryText, fontSize: 14),
                         prefixIcon: Icon(Icons.search_rounded,
@@ -1031,7 +900,7 @@ class _AppPickerBottomSheetState extends State<_AppPickerBottomSheet> {
                 child: _filteredApps.isEmpty
                     ? Center(
                         child: Text(
-                          'Không tìm thấy ứng dụng phù hợp',
+                          t.noAppsFound,
                           style: TextStyle(color: secondaryText),
                         ),
                       )

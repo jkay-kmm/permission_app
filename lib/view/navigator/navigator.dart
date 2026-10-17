@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../../l10n/l10n.dart';
+import '../../l10n/app_localizations.dart';
 import '../blocking/blocking.dart';
 import '../calendar/calendar.dart';
 import '../home/home.dart';
@@ -25,7 +25,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final t = S.of(context);
+    final t = AppLocalizations.of(context);
 
     return Scaffold(
       body: SafeArea(
@@ -77,7 +77,7 @@ class _MainScreenState extends State<MainScreen> {
                   height: 28,
                   colorFilter: const ColorFilter.mode(Colors.orange, BlendMode.srcIn),
                 ),
-                label: "Trang chủ",
+                label: t.navHome,
               ),
               BottomNavigationBarItem(
                 icon: SvgPicture.asset(
@@ -92,7 +92,7 @@ class _MainScreenState extends State<MainScreen> {
                   height: 28,
                   colorFilter: ColorFilter.mode(Colors.orange, BlendMode.srcIn),
                 ),
-                label: "Lịch",
+                label: t.navCalendar,
               ),
               BottomNavigationBarItem(
                 icon: SvgPicture.asset(
@@ -107,7 +107,7 @@ class _MainScreenState extends State<MainScreen> {
                   height: 28,
                   colorFilter: ColorFilter.mode(Colors.orange, BlendMode.srcIn),
                 ),
-                label: "Chặn",
+                label: t.navBlock,
               ),
               BottomNavigationBarItem(
                 icon: SvgPicture.asset(
@@ -122,7 +122,7 @@ class _MainScreenState extends State<MainScreen> {
                   height: 28,
                   colorFilter: ColorFilter.mode(Colors.orange, BlendMode.srcIn),
                 ),
-                label: "Cài đặt",
+                label: t.navSettings,
               ),
             ],
           ),
