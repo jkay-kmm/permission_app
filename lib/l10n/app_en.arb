@@ -25,6 +25,12 @@
   "themeSystem": "System default",
   "themeLight": "Light",
   "themeDark": "Dark",
+  "changeTheme": "Change theme",
+  "themePreviewHint": "Preview a style before applying it",
+  "themeSunset": "Warm orange",
+  "themeOcean": "Ocean blue",
+  "themeViolet": "Soft violet",
+  "applyTheme": "Apply theme",
 
   "reminderTitle": "Reminder at 21:00",
   "reminderSubtitle": "Get your total screen time notification every evening",

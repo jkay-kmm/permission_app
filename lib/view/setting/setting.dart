@@ -3,24 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../l10n/app_localizations.dart';
 import 'daily_reminder_screen.dart';
+import 'theme_picker_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
-  static const _accent = Color(0xFFF27A3D);
-  static const _ink = Color(0xFF2B2927);
 
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
     final appSettings = context.watch<AppViewModel>();
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final background =
-        isDark ? const Color(0xFF171513) : const Color(0xFFFFF8EF);
-    final cardColor = isDark ? const Color(0xFF24211E) : Colors.white;
-    final primaryText = isDark ? const Color(0xFFF8F4EF) : _ink;
-    final secondaryText =
-        isDark ? const Color(0xFFB8B0A8) : const Color(0xFF7A736D);
+    final colors = Theme.of(context).colorScheme;
+    final background = Theme.of(context).scaffoldBackgroundColor;
+    final cardColor = colors.surface;
+    final primaryText = colors.onSurface;
+    final secondaryText = colors.onSurfaceVariant;
     final dividerColor =
         isDark ? Colors.white.withOpacity(.08) : const Color(0xFFF0EAE4);
 
@@ -68,6 +66,18 @@ class SettingsScreen extends StatelessWidget {
                         value: _themeLabel(t, appSettings.themeMode),
                         onTap: () => _showThemePicker(context, appSettings),
                       ),
+                      _SettingsTile(
+                        icon: Icons.color_lens_outlined,
+                        iconColor: Theme.of(context).colorScheme.primary,
+                        iconBackground: Theme.of(context).colorScheme.primaryContainer,
+                        title: t.changeTheme,
+                        subtitle: t.themePreviewHint,
+                        textColor: primaryText,
+                        secondaryTextColor: secondaryText,
+                        onTap: () => Navigator.of(context).push(
+                          MaterialPageRoute(builder: (_) => const ThemePickerScreen()),
+                        ),
+                      ),
                     ],
                   ),
                   const SizedBox(height: 26),
@@ -79,7 +89,7 @@ class SettingsScreen extends StatelessWidget {
                     children: [
                       _SettingsTile(
                         icon: Icons.notifications_active_outlined,
-                        iconColor: const Color(0xFFF27A3D),
+                        iconColor: Theme.of(context).colorScheme.primary,
                         iconBackground: const Color(0xFFFFF0E5),
                         title: t.reminderTitle,
                         subtitle: t.reminderSubtitle,
@@ -282,7 +292,7 @@ class SettingsScreen extends StatelessWidget {
                 color: Color(0xFFFFEEE2),
                 shape: BoxShape.circle,
               ),
-              child: Icon(icon, color: _accent, size: 30),
+              child: Icon(icon, color: Theme.of(context).colorScheme.primary, size: 30),
             ),
             const SizedBox(height: 18),
             Text(
@@ -307,7 +317,7 @@ class SettingsScreen extends StatelessWidget {
               child: FilledButton(
                 onPressed: () => Navigator.of(sheetContext).pop(),
                 style: FilledButton.styleFrom(
-                  backgroundColor: _accent,
+                  backgroundColor: Theme.of(context).colorScheme.primary,
                   foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(vertical: 14),
                   shape: RoundedRectangleBorder(
@@ -491,8 +501,8 @@ class _SettingsTile extends StatelessWidget {
                   ),
                   child: Text(
                     badge!,
-                    style: const TextStyle(
-                      color: SettingsScreen._accent,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
                       fontSize: 10,
                       fontWeight: FontWeight.w800,
                     ),
@@ -579,7 +589,7 @@ class _PickerSheet<T> extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 9),
               child: Material(
                 color: option.value == currentValue
-                    ? SettingsScreen._accent.withOpacity(.10)
+                    ? Theme.of(context).colorScheme.primary.withOpacity(.10)
                     : Theme.of(context).colorScheme.surfaceContainerHighest,
                 borderRadius: BorderRadius.circular(16),
                 child: InkWell(
@@ -619,9 +629,9 @@ class _PickerSheet<T> extends StatelessWidget {
                           ),
                         ),
                         if (option.value == currentValue)
-                          const Icon(
+                          Icon(
                             Icons.check_circle_rounded,
-                            color: SettingsScreen._accent,
+                            color: Theme.of(context).colorScheme.primary,
                             size: 23,
                           ),
                       ],

@@ -227,6 +227,42 @@ abstract class AppLocalizations {
   /// **'Tối'**
   String get themeDark;
 
+  /// No description provided for @changeTheme.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đổi Theme'**
+  String get changeTheme;
+
+  /// No description provided for @themePreviewHint.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xem trước giao diện trước khi áp dụng'**
+  String get themePreviewHint;
+
+  /// No description provided for @themeSunset.
+  ///
+  /// In vi, this message translates to:
+  /// **'Cam ấm'**
+  String get themeSunset;
+
+  /// No description provided for @themeOcean.
+  ///
+  /// In vi, this message translates to:
+  /// **'Xanh đại dương'**
+  String get themeOcean;
+
+  /// No description provided for @themeViolet.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tím dịu'**
+  String get themeViolet;
+
+  /// No description provided for @applyTheme.
+  ///
+  /// In vi, this message translates to:
+  /// **'Áp dụng'**
+  String get applyTheme;
+
   /// No description provided for @reminderTitle.
   ///
   /// In vi, this message translates to:

@@ -2,7 +2,7 @@ name: brainrot
 description: "A new Flutter project."
 publish_to: 'none'
 
-version: 1.0.0+1
+version: 1.0.0+2
 
 environment:
   sdk: ^3.5.3
@@ -62,10 +62,6 @@ dev_dependencies:
   hive_generator: 2.0.1
   build_runner: 2.4.12
 
-
-# ==============================
-# Flutter Launcher Icons
-# ==============================
 flutter_launcher_icons:
   android: true
   ios: true

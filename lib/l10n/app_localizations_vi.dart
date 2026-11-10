@@ -73,6 +73,24 @@ class AppLocalizationsVi extends AppLocalizations {
   String get themeDark => 'Tối';
 
   @override
+  String get changeTheme => 'Đổi Theme';
+
+  @override
+  String get themePreviewHint => 'Xem trước giao diện trước khi áp dụng';
+
+  @override
+  String get themeSunset => 'Cam ấm';
+
+  @override
+  String get themeOcean => 'Xanh đại dương';
+
+  @override
+  String get themeViolet => 'Tím dịu';
+
+  @override
+  String get applyTheme => 'Áp dụng';
+
+  @override
   String get reminderTitle => 'Nhắc nhở lúc 21:00';
 
   @override

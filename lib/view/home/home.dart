@@ -48,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     return Consumer<HomeViewModel>(
       builder: (context, homeViewModel, _) {
         return Scaffold(
-          backgroundColor: const Color(0xFFFDF5E6),
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           body: _HomeBody(homeViewModel: homeViewModel),
         );
       },
@@ -63,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('Selected date: ${_formatSelectedDate(date)}'),
-        backgroundColor: Colors.orange,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         duration: const Duration(seconds: 2),
       ),
     );
@@ -103,8 +103,8 @@ class _HomeBody extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SpinKitFadingCircle(
-                  color: Colors.orange,
+                SpinKitFadingCircle(
+                  color: Theme.of(context).colorScheme.primary,
                   size: 48,
                 ),
                 const SizedBox(height: 16),
@@ -149,9 +149,9 @@ class _HomeBody extends StatelessWidget {
                 builder: (context, vm, _) =>
                     _buildWelcomeSection(context, vm),
               ),
-              const Divider(
+              Divider(
                 thickness: 1,
-                color: Colors.black12,
+                color: Theme.of(context).colorScheme.outlineVariant,
                 indent: 16,
                 endIndent: 16,
               ),
@@ -159,9 +159,9 @@ class _HomeBody extends StatelessWidget {
                 builder: (context, vm, _) =>
                     _buildUsageOverview(context, vm),
               ),
-              const Divider(
+              Divider(
                 thickness: 1,
-                color: Colors.black12,
+                color: Theme.of(context).colorScheme.outlineVariant,
                 indent: 16,
                 endIndent: 16,
               ),
@@ -218,13 +218,13 @@ Widget _buildBrainHealthCalculation(
                         width: 120,
                         height: 120,
                         decoration: BoxDecoration(
-                          color: Colors.orange[200],
+                          color: Theme.of(context).colorScheme.primaryContainer,
                           borderRadius: BorderRadius.circular(60),
                         ),
-                        child: const Icon(
+                        child: Icon(
                           Icons.psychology,
                           size: 60,
-                          color: Colors.brown,
+                          color: Theme.of(context).colorScheme.onPrimaryContainer,
                         ),
                       );
                     },
@@ -242,7 +242,7 @@ Widget _buildBrainHealthCalculation(
               text: '${finalScore.toInt()}',
               style: Theme.of(context).textTheme.displayLarge?.copyWith(
                     fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                    color: Theme.of(context).colorScheme.onSurface,
                     fontSize: 48,
                   ),
             ),
@@ -261,7 +261,7 @@ Widget _buildBrainHealthCalculation(
               width: double.infinity,
               height: barHeight,
               decoration: BoxDecoration(
-                color: Colors.black26,
+                color: Theme.of(context).colorScheme.outlineVariant,
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Stack(
@@ -290,7 +290,7 @@ Widget _buildBrainHealthCalculation(
           Text(
             t.homeScoreSubtitle,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: Colors.grey[600],
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
                   fontStyle: FontStyle.italic,
                 ),
             textAlign: TextAlign.center,
@@ -338,8 +338,8 @@ void _showHealthCalculationDetails(
     builder: (BuildContext context) {
       return Container(
         height: MediaQuery.of(context).size.height * 0.8,
-        decoration: const BoxDecoration(
-          color: Colors.white,
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(20),
             topRight: Radius.circular(20),
@@ -387,13 +387,13 @@ void _showHealthCalculationDetails(
                                   width: 60,
                                   height: 60,
                                   decoration: BoxDecoration(
-                                    color: Colors.orange[200],
+                                    color: Theme.of(context).colorScheme.primaryContainer,
                                     borderRadius: BorderRadius.circular(30),
                                   ),
-                                  child: const Icon(
+                                  child: Icon(
                                     Icons.psychology,
                                     size: 30,
-                                    color: Colors.brown,
+                                    color: Theme.of(context).colorScheme.onPrimaryContainer,
                                   ),
                                 );
                               },
@@ -476,14 +476,14 @@ void _showHealthCalculationDetails(
                                             width: 80,
                                             height: 80,
                                             decoration: BoxDecoration(
-                                              color: Colors.orange[200],
+                                              color: Theme.of(context).colorScheme.primaryContainer,
                                               borderRadius:
                                                   BorderRadius.circular(40),
                                             ),
-                                            child: const Icon(
+                                            child: Icon(
                                               Icons.psychology,
                                               size: 40,
-                                              color: Colors.brown,
+                                              color: Theme.of(context).colorScheme.onPrimaryContainer,
                                             ),
                                           );
                                         },
@@ -626,7 +626,7 @@ Widget _buildUsageOverview(BuildContext context, HomeViewModel homeViewModel) {
                   style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
-                        color: Colors.black,
+                        color: Theme.of(context).colorScheme.onSurface,
                       ),
                 ),
               ],
@@ -742,7 +742,7 @@ Widget _buildAppUsageTile(
         Text(
           app.formattedUsage,
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: Colors.grey[600],
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
                 fontSize: 14,
               ),
         ),

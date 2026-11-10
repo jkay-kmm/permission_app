@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../theme/app_theme.dart';
 
 class AppViewModel extends ChangeNotifier {
   bool _isLoading = false;
@@ -11,6 +12,16 @@ class AppViewModel extends ChangeNotifier {
 
   ThemeMode _themeMode = ThemeMode.system;
   ThemeMode get themeMode => _themeMode;
+
+  AppThemeStyle _themeStyle = AppThemeStyle.sunset;
+  AppThemeStyle get themeStyle => _themeStyle;
+
+  Future<void> setThemeStyle(AppThemeStyle style) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('theme_style', style.name);
+    _themeStyle = style;
+    notifyListeners();
+  }
 
   Future<void> setThemeMode(ThemeMode mode) async {
     _themeMode = mode;
@@ -50,6 +61,11 @@ class AppViewModel extends ChangeNotifier {
       'light' => ThemeMode.light,
       _ => ThemeMode.system,
     };
+    final styleRaw = prefs.getString('theme_style');
+    _themeStyle = AppThemeStyle.values.firstWhere(
+      (style) => style.name == styleRaw,
+      orElse: () => AppThemeStyle.sunset,
+    );
 
     notifyListeners();
   }

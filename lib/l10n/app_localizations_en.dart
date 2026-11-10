@@ -73,6 +73,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get themeDark => 'Dark';
 
   @override
+  String get changeTheme => 'Change theme';
+
+  @override
+  String get themePreviewHint => 'Preview a style before applying it';
+
+  @override
+  String get themeSunset => 'Warm orange';
+
+  @override
+  String get themeOcean => 'Ocean blue';
+
+  @override
+  String get themeViolet => 'Soft violet';
+
+  @override
+  String get applyTheme => 'Apply theme';
+
+  @override
   String get reminderTitle => 'Reminder at 21:00';
 
   @override

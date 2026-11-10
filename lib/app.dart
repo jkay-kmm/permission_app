@@ -6,6 +6,7 @@ import 'router/app_router.dart';
 import 'view_model/app_view_model.dart';
 import 'view_model/home_view_model.dart';
 import 'view_model/blocking_view_model.dart';
+import 'theme/app_theme.dart';
 
 class BrainrotApp extends StatelessWidget {
   const BrainrotApp({super.key});
@@ -24,36 +25,8 @@ class BrainrotApp extends StatelessWidget {
           return MaterialApp.router(
             title: 'Brainrot',
             debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-              useMaterial3: true,
-              colorScheme: ColorScheme.fromSeed(
-                seedColor: const Color(0xFFF27A3D),
-                brightness: Brightness.light,
-              ),
-              scaffoldBackgroundColor: const Color(0xFFFFF8EF),
-              bottomSheetTheme: const BottomSheetThemeData(
-                backgroundColor: Colors.white,
-                surfaceTintColor: Colors.transparent,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
-                ),
-              ),
-            ),
-            darkTheme: ThemeData(
-              useMaterial3: true,
-              colorScheme: ColorScheme.fromSeed(
-                seedColor: const Color(0xFFF27A3D),
-                brightness: Brightness.dark,
-              ),
-              scaffoldBackgroundColor: const Color(0xFF171513),
-              bottomSheetTheme: const BottomSheetThemeData(
-                backgroundColor: Color(0xFF24211E),
-                surfaceTintColor: Colors.transparent,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
-                ),
-              ),
-            ),
+            theme: appViewModel.themeStyle.theme(Brightness.light),
+            darkTheme: appViewModel.themeStyle.theme(Brightness.dark),
             themeMode: appViewModel.themeMode,
             locale: appViewModel.locale,
             localizationsDelegates: const [

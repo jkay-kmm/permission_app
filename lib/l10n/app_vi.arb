@@ -25,6 +25,12 @@
   "themeSystem": "Theo hệ thống",
   "themeLight": "Sáng",
   "themeDark": "Tối",
+  "changeTheme": "Đổi Theme",
+  "themePreviewHint": "Xem trước giao diện trước khi áp dụng",
+  "themeSunset": "Cam ấm",
+  "themeOcean": "Xanh đại dương",
+  "themeViolet": "Tím dịu",
+  "applyTheme": "Áp dụng",
 
   "reminderTitle": "Nhắc nhở lúc 21:00",
   "reminderSubtitle": "Thông báo tổng thời gian dùng điện thoại mỗi tối",

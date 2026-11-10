@@ -105,7 +105,7 @@ class _BlockingScreenState extends State<BlockingScreen>
       SnackBar(
         content: Text(t.addedBlockRule(appName)),
         behavior: SnackBarBehavior.floating,
-        backgroundColor: BlockingScreen._accent,
+        backgroundColor: Theme.of(context).colorScheme.primary,
       ),
     );
   }
@@ -114,12 +114,10 @@ class _BlockingScreenState extends State<BlockingScreen>
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final background =
-        isDark ? const Color(0xFF171513) : const Color(0xFFFFF8EF);
-    final cardColor = isDark ? const Color(0xFF24211E) : Colors.white;
-    final primaryText = isDark ? const Color(0xFFF8F4EF) : BlockingScreen._ink;
-    final secondaryText =
-        isDark ? const Color(0xFFB8B0A8) : const Color(0xFF7A736D);
+    final background = Theme.of(context).scaffoldBackgroundColor;
+    final cardColor = Theme.of(context).colorScheme.surface;
+    final primaryText = Theme.of(context).colorScheme.onSurface;
+    final secondaryText = Theme.of(context).colorScheme.onSurfaceVariant;
     final dividerColor =
         isDark ? Colors.white.withOpacity(.08) : const Color(0xFFF0EAE4);
 
@@ -134,7 +132,7 @@ class _BlockingScreenState extends State<BlockingScreen>
           floatingActionButton: FloatingActionButton.extended(
             onPressed: () => _showAppPicker(blockingVM),
             elevation: 3,
-            backgroundColor: BlockingScreen._accent,
+            backgroundColor: Theme.of(context).colorScheme.primary,
             foregroundColor: Colors.white,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
@@ -410,7 +408,7 @@ class _PermissionBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
     final bgColor = isDark ? const Color(0xFF33261A) : const Color(0xFFFFF3E0);
-    const accentColor = Color(0xFFF27A3D);
+    final accentColor = Theme.of(context).colorScheme.primary;
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -429,7 +427,7 @@ class _PermissionBanner extends StatelessWidget {
               color: accentColor.withOpacity(.15),
               borderRadius: BorderRadius.circular(13),
             ),
-            child: const Icon(
+            child: Icon(
               Icons.accessibility_new_rounded,
               color: accentColor,
               size: 22,
@@ -652,7 +650,7 @@ class _RuleTile extends StatelessWidget {
           Switch(
             value: rule.isActive,
             onChanged: (_) => onToggle(),
-            activeColor: BlockingScreen._accent,
+            activeColor: Theme.of(context).colorScheme.primary,
           ),
         ],
       ),
@@ -734,10 +732,10 @@ class _EmptyRulesCard extends StatelessWidget {
               color: const Color(0xFFFFF0E5),
               borderRadius: BorderRadius.circular(20),
             ),
-            child: const Icon(
+            child: Icon(
               Icons.shield_moon_outlined,
               size: 32,
-              color: BlockingScreen._accent,
+              color: Theme.of(context).colorScheme.primary,
             ),
           ),
           const SizedBox(height: 16),
@@ -763,7 +761,7 @@ class _EmptyRulesCard extends StatelessWidget {
           FilledButton.icon(
             onPressed: onAdd,
             style: FilledButton.styleFrom(
-              backgroundColor: BlockingScreen._accent,
+              backgroundColor: Theme.of(context).colorScheme.primary,
               foregroundColor: Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(14),
@@ -825,10 +823,9 @@ class _AppPickerBottomSheetState extends State<_AppPickerBottomSheet> {
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardColor = isDark ? const Color(0xFF24211E) : Colors.white;
-    final primaryText = isDark ? const Color(0xFFF8F4EF) : BlockingScreen._ink;
-    final secondaryText =
-        isDark ? const Color(0xFFB8B0A8) : const Color(0xFF7A736D);
+    final cardColor = Theme.of(context).colorScheme.surface;
+    final primaryText = Theme.of(context).colorScheme.onSurface;
+    final secondaryText = Theme.of(context).colorScheme.onSurfaceVariant;
 
     return DraggableScrollableSheet(
       initialChildSize: 0.85,
@@ -922,7 +919,7 @@ class _AppPickerBottomSheetState extends State<_AppPickerBottomSheet> {
                               packageName: pkg,
                               fallbackIcon: Icons.apps_rounded,
                               fallbackBg: const Color(0xFFFFF0E5),
-                              fallbackColor: BlockingScreen._accent,
+                              fallbackColor: Theme.of(context).colorScheme.primary,
                             ),
                             title: Text(
                               name,

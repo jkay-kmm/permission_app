@@ -188,12 +188,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final background =
-        isDark ? const Color(0xFF171513) : const Color(0xFFFFF8EF);
-    final cardColor = isDark ? const Color(0xFF24211E) : Colors.white;
-    final primaryText = isDark ? const Color(0xFFF8F4EF) : CalendarScreen._ink;
-    final secondaryText =
-        isDark ? const Color(0xFFB8B0A8) : const Color(0xFF7A736D);
+    final background = Theme.of(context).scaffoldBackgroundColor;
+    final cardColor = Theme.of(context).colorScheme.surface;
+    final primaryText = Theme.of(context).colorScheme.onSurface;
+    final secondaryText = Theme.of(context).colorScheme.onSurfaceVariant;
 
     return Scaffold(
       backgroundColor: background,
@@ -476,7 +474,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                           fontWeight:
                               isSelected ? FontWeight.bold : FontWeight.normal,
                           color: isSelected
-                              ? CalendarScreen._accent
+                              ? Theme.of(context).colorScheme.primary
                               : secondaryText,
                         ),
                       ),
@@ -487,12 +485,12 @@ class _CalendarScreenState extends State<CalendarScreen> {
                       height: barHeight.clamp(6.0, chartHeight),
                       decoration: BoxDecoration(
                         color: isSelected
-                            ? CalendarScreen._accent
-                            : CalendarScreen._accent.withOpacity(0.3),
+                            ? Theme.of(context).colorScheme.primary
+                            : Theme.of(context).colorScheme.primary.withOpacity(0.3),
                         borderRadius: BorderRadius.circular(6),
                         border: isSelected
                             ? Border.all(
-                                color: CalendarScreen._accent, width: 2)
+                                color: Theme.of(context).colorScheme.primary, width: 2)
                             : null,
                       ),
                     ),
@@ -504,7 +502,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                         fontWeight:
                             isSelected ? FontWeight.bold : FontWeight.w500,
                         color:
-                            isSelected ? CalendarScreen._accent : primaryText,
+                            isSelected ? Theme.of(context).colorScheme.primary : primaryText,
                       ),
                     ),
                   ],
@@ -554,7 +552,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                   //   ),
                   //   child: const Icon(
                   //     Icons.donut_large_rounded,
-                  //     color: CalendarScreen._accent,
+                  //     color: Theme.of(context).colorScheme.primary,
                   //     size: 20,
                   //   ),
                   // ),
@@ -587,7 +585,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
               //   padding:
               //       const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
               //   decoration: BoxDecoration(
-              //     color: CalendarScreen._accent.withOpacity(0.12),
+              //     color: Theme.of(context).colorScheme.primary.withOpacity(0.12),
               //     borderRadius: BorderRadius.circular(12),
               //   ),
               //   child: const Text(
@@ -595,7 +593,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
               //     style: TextStyle(
               //       fontSize: 11,
               //       fontWeight: FontWeight.bold,
-              //       color: CalendarScreen._accent,
+              //       color: Theme.of(context).colorScheme.primary,
               //     ),
               //   ),
               // ),
@@ -604,10 +602,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
           const SizedBox(height: 24),
 
           if (_isLoadingDayUsage)
-            const SizedBox(
+            SizedBox(
               height: 220,
               child: Center(
-                child: CircularProgressIndicator(color: CalendarScreen._accent),
+                child: CircularProgressIndicator(color: Theme.of(context).colorScheme.primary),
               ),
             )
           else ...[
@@ -633,10 +631,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
                     Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Icon(
+                        Icon(
                           Icons.touch_app_rounded,
                           size: 18,
-                          color: CalendarScreen._accent,
+                          color: Theme.of(context).colorScheme.primary,
                         ),
                         const SizedBox(height: 4),
                         Text(
@@ -785,7 +783,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
             //       style: TextStyle(fontWeight: FontWeight.bold),
             //     ),
             //     style: TextButton.styleFrom(
-            //       foregroundColor: CalendarScreen._accent,
+            //       foregroundColor: Theme.of(context).colorScheme.primary,
             //     ),
             //   ),
             // ),
@@ -877,14 +875,14 @@ class _CalendarDayCell extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         decoration: BoxDecoration(
           color: isSelected
-              ? CalendarScreen._accent.withOpacity(isDark ? 0.25 : 0.15)
+              ? Theme.of(context).colorScheme.primary.withOpacity(isDark ? 0.25 : 0.15)
               : (isDark ? const Color(0xFF1E1C1A) : const Color(0xFFFAF7F2)),
           borderRadius: BorderRadius.circular(12),
           border: isSelected
-              ? Border.all(color: CalendarScreen._accent, width: 2)
+              ? Border.all(color: Theme.of(context).colorScheme.primary, width: 2)
               : (isToday
                   ? Border.all(
-                      color: CalendarScreen._accent.withOpacity(0.5),
+                      color: Theme.of(context).colorScheme.primary.withOpacity(0.5),
                       width: 1.5)
                   : null),
         ),
@@ -898,7 +896,7 @@ class _CalendarDayCell extends StatelessWidget {
                 fontWeight:
                     isSelected || isToday ? FontWeight.bold : FontWeight.w600,
                 color: isSelected || isToday
-                    ? CalendarScreen._accent
+                    ? Theme.of(context).colorScheme.primary
                     : (isDark ? Colors.white : Colors.black),
                 fontSize: 12,
               ),
@@ -913,9 +911,9 @@ class _CalendarDayCell extends StatelessWidget {
                     fit: BoxFit.cover,
                     cacheWidth: 40,
                     errorBuilder: (context, error, stackTrace) {
-                      return const Icon(
+                      return Icon(
                         Icons.sentiment_satisfied_rounded,
-                        color: CalendarScreen._accent,
+                        color: Theme.of(context).colorScheme.primary,
                         size: 16,
                       );
                     },
@@ -962,10 +960,10 @@ class _AppIconThumb extends StatelessWidget {
             color: const Color(0xFFFFF0E5),
             borderRadius: BorderRadius.circular(6),
           ),
-          child: const Icon(
+          child: Icon(
             Icons.apps_rounded,
             size: 14,
-            color: CalendarScreen._accent,
+            color: Theme.of(context).colorScheme.primary,
           ),
         );
       },

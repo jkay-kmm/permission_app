@@ -12,9 +12,6 @@
     <!-- 3. Quyền nhận sự kiện sau khi máy khởi động lại -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
-    <!-- 4. Quyền yêu cầu bỏ qua tối ưu pin để tác vụ nền chạy đúng giờ -->
-    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
-
     <application
         android:label="brainrot"
         android:name="${applicationName}"
@@ -49,6 +46,17 @@
             android:noHistory="true"
             android:taskAffinity=""
             android:theme="@style/NormalTheme" />
+
+        <receiver
+            android:name=".UsageWidgetProvider"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/usage_widget_info" />
+        </receiver>
 
         <service
             android:name=".AppDetectionService"

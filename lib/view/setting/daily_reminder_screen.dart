@@ -133,7 +133,7 @@ class _DailyReminderScreenState extends State<DailyReminderScreen>
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(t.testNotificationSuccess),
-          backgroundColor: DailyReminderScreen._accent,
+          backgroundColor: Theme.of(context).colorScheme.primary,
           behavior: SnackBarBehavior.floating,
         ),
       );
@@ -144,13 +144,10 @@ class _DailyReminderScreenState extends State<DailyReminderScreen>
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final background =
-        isDark ? const Color(0xFF171513) : const Color(0xFFFFF8EF);
-    final cardColor = isDark ? const Color(0xFF24211E) : Colors.white;
-    final primaryText =
-        isDark ? const Color(0xFFF8F4EF) : DailyReminderScreen._ink;
-    final secondaryText =
-        isDark ? const Color(0xFFB8B0A8) : const Color(0xFF7A736D);
+    final background = Theme.of(context).scaffoldBackgroundColor;
+    final cardColor = Theme.of(context).colorScheme.surface;
+    final primaryText = Theme.of(context).colorScheme.onSurface;
+    final secondaryText = Theme.of(context).colorScheme.onSurfaceVariant;
 
     return Scaffold(
       backgroundColor: background,
@@ -170,7 +167,7 @@ class _DailyReminderScreenState extends State<DailyReminderScreen>
       body: _isLoading
           ? Center(
               child: LoadingAnimationWidget.hexagonDots(
-                  color: DailyReminderScreen._accent, size: 50))
+                  color: Theme.of(context).colorScheme.primary, size: 50))
           : RefreshIndicator(
               onRefresh: _refreshData,
               child: SingleChildScrollView(
@@ -186,14 +183,14 @@ class _DailyReminderScreenState extends State<DailyReminderScreen>
                       width: double.infinity,
                       padding: const EdgeInsets.all(22),
                       decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: [Color(0xFFF58A4E), Color(0xFFEF6941)],
+                        gradient: LinearGradient(
+                          colors: [Theme.of(context).colorScheme.primary, Theme.of(context).colorScheme.secondary],
                         ),
                         borderRadius: BorderRadius.circular(24),
                         boxShadow: [
                           BoxShadow(
                             color:
-                                DailyReminderScreen._accent.withOpacity(0.24),
+                                Theme.of(context).colorScheme.primary.withOpacity(0.24),
                             blurRadius: 20,
                             offset: const Offset(0, 8),
                           ),
@@ -250,14 +247,14 @@ class _DailyReminderScreenState extends State<DailyReminderScreen>
                               : const Color(0xFFFFF3E0),
                           borderRadius: BorderRadius.circular(18),
                           border: Border.all(
-                            color: DailyReminderScreen._accent.withOpacity(0.3),
+                            color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
                           ),
                         ),
                         child: Row(
                           children: [
-                            const Icon(
+                            Icon(
                               Icons.warning_amber_rounded,
-                              color: DailyReminderScreen._accent,
+                              color: Theme.of(context).colorScheme.primary,
                               size: 24,
                             ),
                             const SizedBox(width: 12),
@@ -274,7 +271,7 @@ class _DailyReminderScreenState extends State<DailyReminderScreen>
                             FilledButton(
                               onPressed: _handlePermissionRequest,
                               style: FilledButton.styleFrom(
-                                backgroundColor: DailyReminderScreen._accent,
+                                backgroundColor: Theme.of(context).colorScheme.primary,
                                 visualDensity: VisualDensity.compact,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10),
@@ -305,7 +302,7 @@ class _DailyReminderScreenState extends State<DailyReminderScreen>
                       child: SwitchListTile(
                         value: _isReminderEnabled,
                         onChanged: _toggleReminder,
-                        activeColor: DailyReminderScreen._accent,
+                        activeColor: Theme.of(context).colorScheme.primary,
                         contentPadding: EdgeInsets.zero,
                         title: Text(
                           t.dailyReminderToggleTitle,
@@ -332,7 +329,7 @@ class _DailyReminderScreenState extends State<DailyReminderScreen>
                       child: FilledButton.icon(
                         onPressed: _testNotificationNow,
                         style: FilledButton.styleFrom(
-                          backgroundColor: DailyReminderScreen._accent,
+                          backgroundColor: Theme.of(context).colorScheme.primary,
                           foregroundColor: Colors.white,
                           padding: const EdgeInsets.symmetric(vertical: 14),
                           shape: RoundedRectangleBorder(
@@ -396,8 +393,8 @@ class _DailyReminderScreenState extends State<DailyReminderScreen>
                             onTap: _requestIgnoreBatteryOptimization,
                             child: Text(
                               t.batteryOptimizationLink,
-                              style: const TextStyle(
-                                color: DailyReminderScreen._accent,
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.primary,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 13,
                               ),
