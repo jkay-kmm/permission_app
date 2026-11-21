@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="widget_mood_description">Biểu cảm hiện tại của bộ não</string>
+    <string name="widget_description">Bộ não nhỏ và lời nhắc dí dỏm giúp bạn bớt lướt điện thoại.</string>
+    <string name="widget_quote_vui">Quá ok</string>
+    <string name="widget_quote_suynghi">Hơi căng</string>
+    <string name="widget_quote_cangthang">Nổ đó</string>
+    <string name="widget_quote_buonngu">Ngủ thôi</string>
+    <string name="sleep_block_reason">Đến giờ nghỉ ngơi. Ứng dụng này đang bị chặn bởi chế độ ngủ. Bạn có thể thay đổi lịch ngủ trong Brainrot.</string>
+</resources>

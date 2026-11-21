@@ -7,6 +7,66 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
+  String get sleepActive => 'Time to rest';
+
+  @override
+  String get sleepInactive => 'Sleep mode is off';
+
+  @override
+  String get sleepDescription => 'Pause distracting apps and make room for rest. Your schedule still applies when Brainrot is closed, provided its accessibility service is enabled.';
+
+  @override
+  String get sleepStartNow => 'Save and sleep until end time';
+
+  @override
+  String get sleepEndNow => 'End this sleep session';
+
+  @override
+  String get sleepAutoSchedule => 'Use a schedule';
+
+  @override
+  String get sleepDaysHint => 'Choose the days your sleep starts. Overnight schedules end the following morning. Tap Save to apply changes.';
+
+  @override
+  String get sleepBedtime => 'Bedtime';
+
+  @override
+  String get sleepWakeTime => 'End time';
+
+  @override
+  String get sleepAllowedApps => 'Allowed apps';
+
+  @override
+  String get sleepAllowedHint => 'Select exceptions. Sleep mode blocks all other apps, including apps installed later. Phone, clock, home and settings apps are always exempt from sleep mode.';
+
+  @override
+  String get sleepEssentialApp => 'Essential app · always allowed';
+
+  @override
+  String get sleepPermissionHint => 'Enable the Brainrot accessibility service to block apps. Saved schedules only take effect while this permission is enabled.';
+
+  @override
+  String get sleepSystemHint => 'This mode does not set an alarm or change phone sounds or Do Not Disturb. Ending a session pauses sleep mode until the next end time; future schedules are kept.';
+
+  @override
+  String get sleepSave => 'Save settings';
+
+  @override
+  String get sleepSaved => 'Sleep mode saved';
+
+  @override
+  String get sleepSaveFailed => 'Could not save sleep mode. Please try again.';
+
+  @override
+  String get sleepLoadFailed => 'Could not load sleep settings.';
+
+  @override
+  String get sleepInvalidSchedule => 'Select at least one day and use different start and end times.';
+
+  @override
+  String get sleepAndroidOnly => 'Sleep mode currently supports app blocking on Android.';
+
+  @override
   String get settingsTitle => 'Settings';
 
   @override

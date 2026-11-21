@@ -73,7 +73,7 @@ class PermissionService {
     }
   }
 
-  Future<List<Map<String, String>>> getLaunchableApps() async {
+  Future<List<Map<String, String>>> getLaunchableApps({bool throwOnError = false}) async {
     if (defaultTargetPlatform != TargetPlatform.android) return [];
     try {
       final apps = await _channel.invokeListMethod<dynamic>('getLaunchableApps');
@@ -86,6 +86,7 @@ class PermissionService {
       }).where((app) => app['packageName']!.isNotEmpty).toList();
     } catch (e) {
       debugPrint('Error loading installed apps: $e');
+      if (throwOnError) rethrow;
       return [];
     }
   }

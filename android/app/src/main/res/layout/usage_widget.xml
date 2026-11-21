@@ -5,32 +5,27 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:padding="16dp"
-    android:background="#FFFFE4B5">
-
+    android:padding="12dp"
+    android:background="@drawable/widget_background">
     <ImageView
         android:id="@+id/widget_mood_icon"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scaleType="fitCenter"
         android:contentDescription="@string/widget_mood_description"
         android:src="@drawable/vui" />
-
     <TextView
-        android:id="@+id/widget_score_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="100"
-        android:textColor="#FF333333"
-        android:textSize="28sp"
-        android:textStyle="bold" />
-
-    <ProgressBar
-        android:id="@+id/widget_progress_bar"
-        style="?android:attr/progressBarStyleHorizontal"
+        android:id="@+id/widget_mood_quote"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:max="100"
-        android:progress="100" />
+        android:layout_marginTop="6dp"
+        android:gravity="center"
+        android:text="@string/widget_quote_vui"
+        android:textColor="#392B27"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:breakStrategy="simple"
+        android:singleLine="true"
+        android:ellipsize="end" />
 </LinearLayout>

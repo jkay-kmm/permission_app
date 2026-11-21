@@ -5,11 +5,21 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.widget.RemoteViews
 import es.antonborri.home_widget.HomeWidgetPlugin
 
 
 class UsageWidgetProvider : AppWidgetProvider() {
+
+    override fun onAppWidgetOptionsChanged(
+        context: Context,
+        appWidgetManager: AppWidgetManager,
+        appWidgetId: Int,
+        newOptions: Bundle
+    ) {
+        updateAppWidget(context, appWidgetManager, appWidgetId)
+    }
 
     override fun onUpdate(
         context: Context,
@@ -37,17 +47,12 @@ class UsageWidgetProvider : AppWidgetProvider() {
             appWidgetId: Int
         ) {
             val widgetData = HomeWidgetPlugin.getData(context)
-            val score = widgetData.getInt("widget_score", 100)
             val moodImage = widgetData.getString("widget_mood_image", "vui")
             val views = RemoteViews(context.packageName, R.layout.usage_widget)
-            val iconResId = getMoodIconResource(context, moodImage ?: "vui")
-            if (iconResId != 0) {
-                views.setImageViewResource(R.id.widget_mood_icon, iconResId)
-            }
+            val (iconResId, quoteResId) = getMoodResources(moodImage ?: "vui")
+            views.setImageViewResource(R.id.widget_mood_icon, iconResId)
+            views.setTextViewText(R.id.widget_mood_quote, context.getString(quoteResId))
 
-            views.setTextViewText(R.id.widget_score_text, score.toString())
-
-            views.setProgressBar(R.id.widget_progress_bar, 100, score, false)
 
 
             val intent = Intent(context, MainActivity::class.java).apply {
@@ -65,22 +70,22 @@ class UsageWidgetProvider : AppWidgetProvider() {
             appWidgetManager.updateAppWidget(appWidgetId, views)
         }
 
-        private fun getMoodIconResource(context: Context, moodImage: String): Int {
+        private fun getMoodResources(moodImage: String): Pair<Int, Int> {
             return when {
                 moodImage.contains("vui") -> {
-                    context.resources.getIdentifier("vui", "drawable", context.packageName)
+                    R.drawable.vui to R.string.widget_quote_vui
                 }
                 moodImage.contains("suynghi") -> {
-                    context.resources.getIdentifier("suynghi", "drawable", context.packageName)
+                    R.drawable.suynghi to R.string.widget_quote_suynghi
                 }
                 moodImage.contains("cangthang") -> {
-                    context.resources.getIdentifier("cangthang", "drawable", context.packageName)
+                    R.drawable.cangthang to R.string.widget_quote_cangthang
                 }
                 moodImage.contains("buonngu") -> {
-                    context.resources.getIdentifier("buonngu", "drawable", context.packageName)
+                    R.drawable.buonngu to R.string.widget_quote_buonngu
                 }
                 else -> {
-                    context.resources.getIdentifier("vui", "drawable", context.packageName)
+                    R.drawable.vui to R.string.widget_quote_vui
                 }
             }
         }

@@ -7,6 +7,66 @@ class AppLocalizationsVi extends AppLocalizations {
   AppLocalizationsVi([String locale = 'vi']) : super(locale);
 
   @override
+  String get sleepActive => 'Đang trong giờ nghỉ';
+
+  @override
+  String get sleepInactive => 'Chưa bật chế độ ngủ';
+
+  @override
+  String get sleepDescription => 'Tạm chặn ứng dụng gây xao nhãng để dành thời gian nghỉ ngơi. Lịch vẫn được áp dụng khi bạn đóng Brainrot, nếu dịch vụ Trợ năng đang bật.';
+
+  @override
+  String get sleepStartNow => 'Lưu và ngủ ngay đến giờ thức';
+
+  @override
+  String get sleepEndNow => 'Kết thúc phiên ngủ hiện tại';
+
+  @override
+  String get sleepAutoSchedule => 'Tự động theo lịch';
+
+  @override
+  String get sleepDaysHint => 'Chọn ngày bắt đầu ngủ. Lịch qua đêm kết thúc vào sáng hôm sau. Nhấn Lưu để áp dụng thay đổi.';
+
+  @override
+  String get sleepBedtime => 'Giờ đi ngủ';
+
+  @override
+  String get sleepWakeTime => 'Giờ kết thúc';
+
+  @override
+  String get sleepAllowedApps => 'Ứng dụng được phép dùng';
+
+  @override
+  String get sleepAllowedHint => 'Chọn ứng dụng ngoại lệ. Chế độ ngủ sẽ chặn các ứng dụng còn lại, kể cả ứng dụng cài thêm sau này. Điện thoại, đồng hồ, màn hình chính và cài đặt luôn được miễn chặn bởi chế độ ngủ.';
+
+  @override
+  String get sleepEssentialApp => 'Ứng dụng thiết yếu · luôn được phép';
+
+  @override
+  String get sleepPermissionHint => 'Cần bật dịch vụ Trợ năng của Brainrot để chặn ứng dụng. Lịch đã lưu chỉ có tác dụng khi quyền này được bật.';
+
+  @override
+  String get sleepSystemHint => 'Chế độ này không đặt báo thức và không tự thay đổi âm thanh hay chế độ Không làm phiền của điện thoại. Kết thúc phiên chỉ bỏ qua đến giờ kết thúc tiếp theo; lịch những ngày sau vẫn giữ nguyên.';
+
+  @override
+  String get sleepSave => 'Lưu cài đặt';
+
+  @override
+  String get sleepSaved => 'Đã lưu chế độ ngủ';
+
+  @override
+  String get sleepSaveFailed => 'Không lưu được chế độ ngủ. Vui lòng thử lại.';
+
+  @override
+  String get sleepLoadFailed => 'Không tải được cài đặt chế độ ngủ.';
+
+  @override
+  String get sleepInvalidSchedule => 'Chọn ít nhất một ngày và đặt giờ bắt đầu khác giờ kết thúc.';
+
+  @override
+  String get sleepAndroidOnly => 'Chế độ ngủ hiện hỗ trợ chặn ứng dụng trên Android.';
+
+  @override
   String get settingsTitle => 'Cài đặt';
 
   @override

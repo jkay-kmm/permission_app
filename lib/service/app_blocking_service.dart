@@ -11,6 +11,7 @@ import '../model/app_usage_info.dart';
 import 'app_usage_service.dart';
 import 'real_app_usage_service.dart';
 import 'usage_history_service.dart';
+import 'sleep_mode_service.dart';
 
 class AppBlockingService {
   static final AppBlockingService _instance = AppBlockingService._internal();
@@ -46,6 +47,11 @@ class AppBlockingService {
   Timer? _periodicTimer;
   Timer? _dailyResetTimer;
   Future<void> initialize() async {
+    try {
+      await SleepModeService.instance.load();
+    } catch (e) {
+      debugPrint('Could not load sleep mode: $e');
+    }
     await _loadRules();
     await _loadFocusModes();
     await _syncNativeData();
@@ -156,6 +162,18 @@ class AppBlockingService {
     Duration? dailyLimit;
     Duration? sessionLimit;
     bool canBypass = false;
+    if (SleepModeService.instance.shouldBlock(packageName, DateTime.now())) {
+      return AppBlockInfo(
+        packageName: packageName,
+        appName: appName,
+        status: AppBlockStatus.blocked,
+        dailyUsage: dailyUsage,
+        sessionUsage: sessionUsage,
+        activeRuleIds: const ['sleep_mode'],
+        blockReason: 'Sleep mode',
+        canBypass: false,
+      );
+    }
     final activeFocus = activeFocusMode;
     if (activeFocus != null && activeFocus.shouldBlockPackage(packageName)) {
       status = AppBlockStatus.blocked;

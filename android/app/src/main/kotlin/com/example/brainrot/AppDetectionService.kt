@@ -4,6 +4,10 @@ import android.accessibilityservice.AccessibilityService
 import android.app.usage.UsageStatsManager
 import android.content.Context
 import android.content.Intent
+import android.app.KeyguardManager
+import android.os.Handler
+import android.os.Looper
+import android.os.PowerManager
 import android.util.Log
 import android.view.accessibility.AccessibilityEvent
 import org.json.JSONObject
@@ -18,17 +22,43 @@ class AppDetectionService : AccessibilityService() {
     }
 
     private var lastPackageName: String? = null
+    private val handler = Handler(Looper.getMainLooper())
+    private val sleepCheck = object : Runnable {
+        override fun run() {
+            try {
+                val power = getSystemService(Context.POWER_SERVICE) as PowerManager
+                val keyguard = getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
+                if (power.isInteractive && !keyguard.isKeyguardLocked) {
+                    val foreground = lastPackageName
+                    if (foreground != null && !shouldIgnorePackage(foreground) &&
+                        SleepMode.shouldBlock(this@AppDetectionService, foreground)) {
+                        showBlockScreen(foreground, getString(R.string.sleep_block_reason), false)
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Could not check sleep mode", e)
+            } finally {
+                // shortcut: schedule boundaries can take 5 seconds to apply; use alarms if exact timing is needed.
+                handler.postDelayed(this, 5000L)
+            }
+        }
+    }
 
     override fun onServiceConnected() {
         super.onServiceConnected()
         Log.d(TAG, "App blocker accessibility service connected")
+        handler.removeCallbacks(sleepCheck)
+        handler.post(sleepCheck)
     }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
         if (event?.eventType != AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) return
 
         val packageName = event.packageName?.toString() ?: return
-        if (shouldIgnorePackage(packageName) || packageName == lastPackageName) return
+        if (shouldIgnorePackage(packageName)) {
+            if (packageName != "com.android.systemui") lastPackageName = null
+            return
+        }
 
         lastPackageName = packageName
         val blockResult = shouldBlockPackage(packageName)
@@ -52,6 +82,9 @@ class AppDetectionService : AccessibilityService() {
     private fun shouldBlockPackage(packageName: String): BlockResult {
         return try {
             val prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+            if (SleepMode.shouldBlock(this, packageName)) {
+                return BlockResult(true, getString(R.string.sleep_block_reason), false)
+            }
 
             val focusModes = org.json.JSONArray(prefs.getString(FOCUS_MODES_KEY, "[]"))
             for (i in 0 until focusModes.length()) {
@@ -168,6 +201,11 @@ class AppDetectionService : AccessibilityService() {
     }
 
     override fun onInterrupt() = Unit
+
+    override fun onDestroy() {
+        handler.removeCallbacks(sleepCheck)
+        super.onDestroy()
+    }
 
     private fun org.json.JSONArray?.contains(value: String): Boolean {
         if (this == null) return false

@@ -33,6 +33,24 @@ class MainActivity : FlutterActivity() {
 
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler { call, result ->
             when (call.method) {
+                "getSleepMode" -> {
+                    try {
+                        result.success(mapOf(
+                            "schedule" to SleepMode.read(this).toString(),
+                            "essentialPackages" to SleepMode.essentialPackages(this).toList()
+                        ))
+                    } catch (e: Exception) {
+                        result.error("SLEEP_LOAD", "Could not load sleep mode", null)
+                    }
+                }
+                "setSleepMode" -> {
+                    try {
+                        val json = requireNotNull(call.argument<String>("schedule"))
+                        result.success(SleepMode.save(this, json))
+                    } catch (e: Exception) {
+                        result.error("SLEEP_SAVE", "Could not save sleep mode", null)
+                    }
+                }
                 "hasUsagePermission" -> {
                     result.success(hasUsageStatsPermission())
                 }

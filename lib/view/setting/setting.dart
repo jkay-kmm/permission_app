@@ -4,10 +4,10 @@ import 'package:provider/provider.dart';
 import '../../l10n/app_localizations.dart';
 import 'daily_reminder_screen.dart';
 import 'theme_picker_screen.dart';
+import 'sleep_mode_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
-
 
   @override
   Widget build(BuildContext context) {
@@ -69,13 +69,15 @@ class SettingsScreen extends StatelessWidget {
                       _SettingsTile(
                         icon: Icons.color_lens_outlined,
                         iconColor: Theme.of(context).colorScheme.primary,
-                        iconBackground: Theme.of(context).colorScheme.primaryContainer,
+                        iconBackground:
+                            Theme.of(context).colorScheme.primaryContainer,
                         title: t.changeTheme,
                         subtitle: t.themePreviewHint,
                         textColor: primaryText,
                         secondaryTextColor: secondaryText,
                         onTap: () => Navigator.of(context).push(
-                          MaterialPageRoute(builder: (_) => const ThemePickerScreen()),
+                          MaterialPageRoute(
+                              builder: (_) => const ThemePickerScreen()),
                         ),
                       ),
                     ],
@@ -124,11 +126,9 @@ class SettingsScreen extends StatelessWidget {
                         subtitle: t.sleepModeSubtitle,
                         textColor: primaryText,
                         secondaryTextColor: secondaryText,
-                        badge: t.comingSoon,
-                        onTap: () => _showComingSoon(
-                          context,
-                          title: t.sleepModeTitle,
-                          icon: Icons.bedtime_outlined,
+                        onTap: () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                              builder: (_) => const SleepModeScreen()),
                         ),
                       ),
                     ],
@@ -292,7 +292,8 @@ class SettingsScreen extends StatelessWidget {
                 color: Color(0xFFFFEEE2),
                 shape: BoxShape.circle,
               ),
-              child: Icon(icon, color: Theme.of(context).colorScheme.primary, size: 30),
+              child: Icon(icon,
+                  color: Theme.of(context).colorScheme.primary, size: 30),
             ),
             const SizedBox(height: 18),
             Text(
@@ -485,8 +486,7 @@ class _SettingsTile extends StatelessWidget {
                       subtitle,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style:
-                          TextStyle(color: secondaryTextColor, fontSize: 12),
+                      style: TextStyle(color: secondaryTextColor, fontSize: 12),
                     ),
                   ],
                 ),

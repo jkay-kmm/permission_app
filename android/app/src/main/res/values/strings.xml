@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="sleep_block_reason">Time to rest. This app is paused by Sleep mode. You can change your sleep settings in Brainrot.</string>
     <string name="notification_channel_name">App blocking</string>
     <string name="notification_channel_description">Keeps app blocking active</string>
     <string name="notification_service_title">Brainrot is active</string>
@@ -9,6 +10,11 @@
     <string name="block_button_ok">Go home</string>
     <string name="block_button_emergency">Emergency access</string>
     <string name="widget_mood_description">Current mood</string>
+    <string name="widget_description">A little brain and a cheeky reminder to stop scrolling.</string>
+    <string name="widget_quote_vui">All good</string>
+    <string name="widget_quote_suynghi">Easy there</string>
+    <string name="widget_quote_cangthang">Brain boom</string>
+    <string name="widget_quote_buonngu">Sleep please</string>
     <string name="accessibility_service_name">Brainrot app blocker</string>
     <string name="accessibility_service_description">Detects when a blocked app is opened and displays the blocking screen.</string>
 </resources>

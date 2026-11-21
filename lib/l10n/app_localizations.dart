@@ -95,6 +95,126 @@ abstract class AppLocalizations {
     Locale('vi')
   ];
 
+  /// No description provided for @sleepActive.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đang trong giờ nghỉ'**
+  String get sleepActive;
+
+  /// No description provided for @sleepInactive.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chưa bật chế độ ngủ'**
+  String get sleepInactive;
+
+  /// No description provided for @sleepDescription.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tạm chặn ứng dụng gây xao nhãng để dành thời gian nghỉ ngơi. Lịch vẫn được áp dụng khi bạn đóng Brainrot, nếu dịch vụ Trợ năng đang bật.'**
+  String get sleepDescription;
+
+  /// No description provided for @sleepStartNow.
+  ///
+  /// In vi, this message translates to:
+  /// **'Lưu và ngủ ngay đến giờ thức'**
+  String get sleepStartNow;
+
+  /// No description provided for @sleepEndNow.
+  ///
+  /// In vi, this message translates to:
+  /// **'Kết thúc phiên ngủ hiện tại'**
+  String get sleepEndNow;
+
+  /// No description provided for @sleepAutoSchedule.
+  ///
+  /// In vi, this message translates to:
+  /// **'Tự động theo lịch'**
+  String get sleepAutoSchedule;
+
+  /// No description provided for @sleepDaysHint.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chọn ngày bắt đầu ngủ. Lịch qua đêm kết thúc vào sáng hôm sau. Nhấn Lưu để áp dụng thay đổi.'**
+  String get sleepDaysHint;
+
+  /// No description provided for @sleepBedtime.
+  ///
+  /// In vi, this message translates to:
+  /// **'Giờ đi ngủ'**
+  String get sleepBedtime;
+
+  /// No description provided for @sleepWakeTime.
+  ///
+  /// In vi, this message translates to:
+  /// **'Giờ kết thúc'**
+  String get sleepWakeTime;
+
+  /// No description provided for @sleepAllowedApps.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ứng dụng được phép dùng'**
+  String get sleepAllowedApps;
+
+  /// No description provided for @sleepAllowedHint.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chọn ứng dụng ngoại lệ. Chế độ ngủ sẽ chặn các ứng dụng còn lại, kể cả ứng dụng cài thêm sau này. Điện thoại, đồng hồ, màn hình chính và cài đặt luôn được miễn chặn bởi chế độ ngủ.'**
+  String get sleepAllowedHint;
+
+  /// No description provided for @sleepEssentialApp.
+  ///
+  /// In vi, this message translates to:
+  /// **'Ứng dụng thiết yếu · luôn được phép'**
+  String get sleepEssentialApp;
+
+  /// No description provided for @sleepPermissionHint.
+  ///
+  /// In vi, this message translates to:
+  /// **'Cần bật dịch vụ Trợ năng của Brainrot để chặn ứng dụng. Lịch đã lưu chỉ có tác dụng khi quyền này được bật.'**
+  String get sleepPermissionHint;
+
+  /// No description provided for @sleepSystemHint.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chế độ này không đặt báo thức và không tự thay đổi âm thanh hay chế độ Không làm phiền của điện thoại. Kết thúc phiên chỉ bỏ qua đến giờ kết thúc tiếp theo; lịch những ngày sau vẫn giữ nguyên.'**
+  String get sleepSystemHint;
+
+  /// No description provided for @sleepSave.
+  ///
+  /// In vi, this message translates to:
+  /// **'Lưu cài đặt'**
+  String get sleepSave;
+
+  /// No description provided for @sleepSaved.
+  ///
+  /// In vi, this message translates to:
+  /// **'Đã lưu chế độ ngủ'**
+  String get sleepSaved;
+
+  /// No description provided for @sleepSaveFailed.
+  ///
+  /// In vi, this message translates to:
+  /// **'Không lưu được chế độ ngủ. Vui lòng thử lại.'**
+  String get sleepSaveFailed;
+
+  /// No description provided for @sleepLoadFailed.
+  ///
+  /// In vi, this message translates to:
+  /// **'Không tải được cài đặt chế độ ngủ.'**
+  String get sleepLoadFailed;
+
+  /// No description provided for @sleepInvalidSchedule.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chọn ít nhất một ngày và đặt giờ bắt đầu khác giờ kết thúc.'**
+  String get sleepInvalidSchedule;
+
+  /// No description provided for @sleepAndroidOnly.
+  ///
+  /// In vi, this message translates to:
+  /// **'Chế độ ngủ hiện hỗ trợ chặn ứng dụng trên Android.'**
+  String get sleepAndroidOnly;
+
   /// No description provided for @settingsTitle.
   ///
   /// In vi, this message translates to:
