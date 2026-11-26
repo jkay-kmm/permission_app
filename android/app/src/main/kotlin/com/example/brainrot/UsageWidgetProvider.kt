@@ -30,6 +30,8 @@ class UsageWidgetProvider : AppWidgetProvider() {
         appWidgetIds.forEach { widgetId ->
             updateAppWidget(context, appWidgetManager, widgetId)
         }
+        UsageWidgetWorker.schedule(context)
+        UsageWidgetWorker.refresh(context)
     }
 
     override fun onEnabled(context: Context) {
@@ -37,10 +39,17 @@ class UsageWidgetProvider : AppWidgetProvider() {
     }
 
     override fun onDisabled(context: Context) {
+        UsageWidgetWorker.cancel(context)
         super.onDisabled(context)
     }
 
     companion object {
+        fun hasWidgets(context: Context): Boolean {
+            return AppWidgetManager.getInstance(context).getAppWidgetIds(
+                android.content.ComponentName(context, UsageWidgetProvider::class.java)
+            ).isNotEmpty()
+        }
+
         fun updateAppWidget(
             context: Context,
             appWidgetManager: AppWidgetManager,

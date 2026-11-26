@@ -12,6 +12,7 @@ import android.util.Log
 import android.view.accessibility.AccessibilityEvent
 import org.json.JSONObject
 import java.util.Calendar
+import java.util.concurrent.Executors
 
 class AppDetectionService : AccessibilityService() {
     companion object {
@@ -22,6 +23,9 @@ class AppDetectionService : AccessibilityService() {
     }
 
     private var lastPackageName: String? = null
+    private var lastWidgetPackage: String? = null
+    private var lastWidgetRefresh = 0L
+    private val widgetExecutor = Executors.newSingleThreadExecutor()
     private val handler = Handler(Looper.getMainLooper())
     private val sleepCheck = object : Runnable {
         override fun run() {
@@ -29,6 +33,11 @@ class AppDetectionService : AccessibilityService() {
                 val power = getSystemService(Context.POWER_SERVICE) as PowerManager
                 val keyguard = getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
                 if (power.isInteractive && !keyguard.isKeyguardLocked) {
+                    val now = android.os.SystemClock.elapsedRealtime()
+                    if (now - lastWidgetRefresh >= 60000L) {
+                        lastWidgetRefresh = now
+                        refreshWidget()
+                    }
                     val foreground = lastPackageName
                     if (foreground != null && !shouldIgnorePackage(foreground) &&
                         SleepMode.shouldBlock(this@AppDetectionService, foreground)) {
@@ -47,6 +56,8 @@ class AppDetectionService : AccessibilityService() {
     override fun onServiceConnected() {
         super.onServiceConnected()
         Log.d(TAG, "App blocker accessibility service connected")
+        UsageWidgetWorker.schedule(this)
+        refreshWidget()
         handler.removeCallbacks(sleepCheck)
         handler.post(sleepCheck)
     }
@@ -55,6 +66,11 @@ class AppDetectionService : AccessibilityService() {
         if (event?.eventType != AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) return
 
         val packageName = event.packageName?.toString() ?: return
+        // Include the launcher: returning Home must refresh without opening Brainrot.
+        if (packageName != lastWidgetPackage) {
+            lastWidgetPackage = packageName
+            refreshWidget()
+        }
         if (shouldIgnorePackage(packageName)) {
             if (packageName != "com.android.systemui") lastPackageName = null
             return
@@ -65,6 +81,12 @@ class AppDetectionService : AccessibilityService() {
         if (blockResult.shouldBlock) {
             showBlockScreen(packageName, blockResult.reason, blockResult.canBypass)
         }
+    }
+
+    private fun refreshWidget() {
+        if (!UsageWidgetProvider.hasWidgets(this)) return
+        // Read usage off the accessibility thread without waiting for Android's job scheduler.
+        widgetExecutor.execute { UsageWidgetWorker.updateWidget(applicationContext) }
     }
 
     private fun shouldIgnorePackage(packageName: String): Boolean {
@@ -204,6 +226,7 @@ class AppDetectionService : AccessibilityService() {
 
     override fun onDestroy() {
         handler.removeCallbacks(sleepCheck)
+        widgetExecutor.shutdownNow()
         super.onDestroy()
     }
 

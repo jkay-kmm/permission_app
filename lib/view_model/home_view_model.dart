@@ -222,6 +222,7 @@ class HomeViewModel extends ChangeNotifier {
         await _saveCurrentScore();
       }
 
+      await _updateWidget();
       notifyListeners();
     } catch (e) {
       debugPrint('Silent refresh error: $e');
